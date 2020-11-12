@@ -1,0 +1,5 @@
+D:\Work\Alraiya\PortAuthority\EManifestServices\Emanifest.Core\bin\Debug\Emanifest.Core.dll
+D:\Work\Alraiya\PortAuthority\EManifestServices\Emanifest.Core\bin\Debug\Emanifest.Core.pdb
+D:\Work\Alraiya\PortAuthority\EManifestServices\Emanifest.Core\obj\Debug\Emanifest.Core.csproj.CoreCompileInputs.cache
+D:\Work\Alraiya\PortAuthority\EManifestServices\Emanifest.Core\obj\Debug\Emanifest.Core.dll
+D:\Work\Alraiya\PortAuthority\EManifestServices\Emanifest.Core\obj\Debug\Emanifest.Core.pdb

@@ -1,0 +1,6 @@
+D:\Work\Alraiya\PortAuthority\EManifestServices\Emanifest.Core\bin\Release\Emanifest.Core.dll
+D:\Work\Alraiya\PortAuthority\EManifestServices\Emanifest.Core\bin\Release\Emanifest.Core.pdb
+D:\Work\Alraiya\PortAuthority\EManifestServices\Emanifest.Core\obj\Release\Emanifest.Core.csproj.CoreCompileInputs.cache
+D:\Work\Alraiya\PortAuthority\EManifestServices\Emanifest.Core\obj\Release\Emanifest.Core.dll
+D:\Work\Alraiya\PortAuthority\EManifestServices\Emanifest.Core\obj\Release\Emanifest.Core.pdb
+D:\Work\Alraiya\PortAuthority\EManifestServices\Emanifest.Core\obj\Release\Emanifest.Core.csprojAssemblyReference.cache

@@ -1,0 +1,127 @@
+﻿@model EManifestServices.Models.ManifestModel
+
+@{
+    ViewBag.Title = "ViewManifest";
+}
+
+<div class="card card-shadow mb-4">
+    <div class="card-header">
+        <div class="card-title">
+            Manifest data
+        </div>
+    </div>
+    <div class="card-body">
+        @*@using (Html.BeginForm("ViewManifest", "Manifest", FormMethod.Post, new { id = "ManifestDataFrom", enctype = "multipart/form-data" }))
+            {
+                @Html.HiddenFor(m => m.ManifestId)
+                if (!Html.ValidationSummary().ToString().Contains("display:none"))
+                {
+                    <div class="alert alert-danger">
+                        <strong>Alert ! </strong> @Html.ValidationSummary()
+                    </div>
+                }
+                @Html.AntiForgeryToken()*@
+        @*<div class="row">
+                <div class="form-group col-lg-3">
+                    <label for="CarrierName" class="text-muted">Vessel name</label>
+                    @Html.TextBoxFor(m => m.VesselName, new { @placeholder = "Enter vessel name", required = "required", validationmessage = "Enter {0}", @class = "form-control" })
+                </div>
+                <div class="form-group col-lg-3">
+                    <label for="ExpectedArrivalDate" class="text-muted">Expected arrival date</label>
+                    @(Html.Kendo().DatePickerFor(m => m.ExpectedArrivalDate)
+                                                                                                                                                                    .Format("yyyy-MM-dd")
+                                                                                                                                                                   .HtmlAttributes(new { @class = "form-control" }))
+                </div>
+                <div class="form-group col-lg-3">
+                    <label for="Nationality" class="text-muted">Nationality</label>
+                    @Html.TextBoxFor(m => m.Nationality, new { @placeholder = "Enter Nationality", required = "required", validationmessage = "Enter {0}", @class = "form-control" })
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-lg-3">
+                    <label for="Voyage" class="text-muted">Voyage</label>
+                    @Html.TextBoxFor(m => m.Voyage, new { @placeholder = "Enter voyage", required = "required", @class = "form-control" })
+                </div>
+                <div class="form-group col-lg-3">
+                    <label for="ReceivingPlace" class="text-muted">Receiving place</label>
+                    @Html.TextBoxFor(m => m.ReceivingPlace, new { @placeholder = "Enter receiving place", @class = "form-control" })
+                </div>
+                <div class="form-group col-lg-3">
+                    <label for="LoadingPort" class="text-muted">Loading port</label>
+                    @Html.TextBoxFor(m => m.LoadingPort, new { @placeholder = "Enter loading port", required = "required", @class = "form-control" })
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-lg-3">
+                    <label for="TransshipPort" class="text-muted">Transship port</label>
+                    @Html.TextBoxFor(m => m.TransshipPort, new { @placeholder = "Enter transship port", @class = "form-control" })
+                </div>
+                <div class="form-group col-lg-3">
+                    <label for="DischargingPort" class="text-muted">Discharging port</label>
+                    @Html.TextBoxFor(m => m.DischargingPort, new { @placeholder = "Enter discharging port", required = "required", @class = "form-control" })
+                </div>
+                <div class="form-group col-lg-3">
+                    <label for="Destination" class="text-muted">Destination</label>
+                    @Html.TextBoxFor(m => m.Destination, new { @placeholder = "Enter destination port", required = "required", @class = "form-control" })
+                </div>
+            </div>*@
+        <div class="form-group">
+            <label for="Status" class="text-muted">Status : </label>
+            @Html.DisplayFor(m => m.Status.StatusDesc, new { @class = "form-control" })
+        </div>
+        <div class="form-group">
+            <label for="Status" class="text-muted">Approved : </label>
+            @Html.DisplayFor(m => m.Approved, new { @class = "custom-control-input" })
+        </div>
+        @*<div class="row">
+                <div class="card card-shadow mb-4">
+                    <div class="card-header">
+                        <div class="card-title">
+                            Manifest Items
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        @(Html.Kendo().Grid<EManifestServices.Models.CarrierModel>()
+                                                                                                                                                                                            .Name("grid")
+                                                                        .Columns(columns =>
+                                                                        {
+                                                                            columns.Bound(c => c.CarrierId).Hidden();
+                                                                            columns.Bound(c => c.CarrierName).Title("Username").Width(200);
+                                                                            columns.Bound(c => c.Email).Title("Email").Width(200);
+                                                                            columns.Bound(c => c.Phone).Title("Phone").Width(200);
+                                                                            columns.Bound(c => c.IsActive).Title("Active").ClientTemplate("<label class='custom-control custom-checkbox'><input type='checkbox' class='custom-control-input' disabled='' #= IsActive ? checked='checked' :'' #><span class='custom-control-indicator'></span> <span class='custom-control-description'>Active</span></label>");
+
+                                                                        })
+                                                                    .HtmlAttributes(new { style = "height: 550px;" })
+                                                                    .Scrollable()
+                                                                    .Filterable()
+                                                                    .Sortable()
+                                                                    .Resizable(resizable => resizable.Columns(true))
+                                                                    .Pageable(pageable => pageable
+                                                                        .Refresh(true)
+                                                                        .PageSizes(true)
+                                                                        .ButtonCount(5))
+                                                                    .DataSource(dataSource => dataSource
+                                                                        .Ajax()
+                                                                        .Read(read => read.Action("GetCarriers", "Account"))
+                                                                        .PageSize(20)
+                                                                    )
+                        )
+                    </div>
+                </div>
+            </div>*@
+        @*<button type="submit" @Html.Raw(Model.Status.AllowModify == true ? "" : "disabled='disabled'") class="btn btn-success btn-flat m-b-30 m-t-30">
+                Save
+            </button>*@
+        @*  *@}
+
+    </div>
+
+
+    <script>
+        $(function () {
+            var validator = $("#ManifestDataFrom").kendoValidator().data("kendoValidator");
+
+        });
+    </script>
+

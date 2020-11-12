@@ -1,0 +1,236 @@
+﻿@model EManifestServices.DAL.VoyageDetails
+
+@{
+    ViewBag.Title = "ManifestView";
+}
+
+<div class="container-fluid">
+    @{ Html.RenderPartial("VoyageView", Model);}
+    <div class="row">
+        <div class="col-xl-12 col-lg-12 mb-4">
+            <div class="card card-shadow">
+                <div class="card-header">
+                    <div class="card-title">
+                        <h4>Manifest View And Approval</h4>
+                    </div>
+                </div>
+                <div class="card-body">
+                    @(Html.Kendo().Grid<EManifestServices.DAL.BOLDetails>()
+                                     .Name("grid")
+                                     .Columns(columns =>
+                                     {
+                                         columns.Bound(p => p.BOLDetailsId).Visible(false);
+                                         columns.Bound(p => p.BillOfLadingNumber).Width(200);
+                                         columns.Bound(p => p.BoxPartneringLineCode).Width(200);
+                                         columns.Bound(p => p.BoxPartneringAgentCode).Width(200);
+                                         columns.Bound(p => p.PortCodeOfOrigin).Width(200);
+                                         columns.Bound(p => p.PortCodeOfLoading).Width(200);
+
+                                         columns.Bound(p => p.PortCodeOfDischarge).Width(200);
+                                         columns.Bound(p => p.PortCodeOfDestination).Width(200);
+                                         columns.Bound(p => p.DateOfLoading).Width(450);
+                                         columns.ForeignKey(p => p.TradeCode, (System.Collections.IEnumerable)ViewData["TradeCodesSource"], "Value", "Text")
+                                                 .Title("TradeCode").Width(200);
+                                         columns.ForeignKey(p => p.TransShipmentMode, (System.Collections.IEnumerable)ViewData["TransshipModesSource"], "Value", "Text")
+                                                 .Title("TransShipmentMode").Width(200);
+
+                                         columns.Bound(p => p.BillOfLadingOwnerName).Width(200);
+                                         columns.Bound(p => p.BillOfLadingOwnerAddress).Width(200);
+                                         columns.ForeignKey(p => p.CargoCode, (System.Collections.IEnumerable)ViewData["CargoCodesSource"], "Value", "Text")
+                                             .Title("CargoCode").Width(200);
+                                         columns.ForeignKey(p => p.ConsolidatedCargoIndicator, (System.Collections.IEnumerable)ViewData["YesNoSource"], "Value", "Text")
+                                         .Title("ConsolidatedCargoIndicator").Width(200);
+                                         columns.ForeignKey(p => p.StorageRequestCode, (System.Collections.IEnumerable)ViewData["StorageRequestCodesSource"], "Value", "Text")
+                                     .Title("StorageRequestCode").Width(200);
+
+                                         columns.Bound(p => p.ContainerServiceType).Width(200);
+                                         columns.Bound(p => p.CountryOfOrigin).Width(200);
+                                         columns.Bound(p => p.ShipperName).Width(200);
+                                         columns.Bound(p => p.ShipperAddress).Width(200);
+                                         columns.Bound(p => p.ShipperCountryCode).Width(200);
+
+                                         columns.Bound(p => p.ConsigneeName).Width(200);
+                                         columns.Bound(p => p.ConsigneeAddress).Width(200);
+                                         columns.Bound(p => p.Notify1Name).Width(200);
+                                         columns.Bound(p => p.Notify1Address).Width(200);
+                                         columns.Bound(p => p.Notify2Name).Width(200);
+
+                                         columns.Bound(p => p.Notify2Address).Width(200);
+                                         columns.Bound(p => p.Notify3Name).Width(200);
+                                         columns.Bound(p => p.Notify3Address).Width(200);
+                                         columns.Bound(p => p.MarksAndNumbers).Width(200);
+                                         columns.Bound(p => p.CommodityCode).Width(200);
+
+                                         columns.Bound(p => p.CommodityDescription).Width(200);
+                                         columns.Bound(p => p.Packages).Width(200);
+                                         columns.Bound(p => p.PackageType).Width(200);
+                                         columns.Bound(p => p.PackageTypeCode).Width(200);
+                                         columns.Bound(p => p.ContainerNumber).Width(200);
+
+                                         columns.Bound(p => p.CheckDigit).Width(200);
+                                         columns.Bound(p => p.NoOfContainers).Width(200);
+                                         columns.Bound(p => p.NoOfTeus).Width(200);
+                                         columns.Bound(p => p.TotalTareWeight).Width(200);
+                                         columns.Bound(p => p.CargoWeight).Width(200);
+
+                                         columns.Bound(p => p.GrossWeight).Width(200);
+                                         columns.Bound(p => p.CargoVolume).Width(200);
+                                         columns.Bound(p => p.TotalQuantity).Width(200);
+                                         columns.Bound(p => p.FreightTonne).Width(200);
+                                         columns.Bound(p => p.NoOfPallets).Width(200);
+
+                                         columns.ForeignKey(p => p.SlacIndicator, (System.Collections.IEnumerable)ViewData["YesNoSource"], "Value", "Text")
+                                .Title("SlacIndicator").Width(200);
+                                         columns.ForeignKey(p => p.ContractCarriageCondition, (System.Collections.IEnumerable)ViewData["ContractCarriageConditionsSource"], "Value", "Text")
+                                .Title("ContractCarriageCondition").Width(200);
+                                         columns.Bound(p => p.Remarks).Width(200);
+
+                                     })
+                                     .ClientDetailTemplateId("template")
+                                     .Filterable()
+                                     .Pageable()
+                                     .Resizable(resizable => resizable.Columns(true))
+                                     .Scrollable()
+                                     .HtmlAttributes(new { style = "height:540px;" })
+                                     .DataSource(dataSource => dataSource
+                                                             .Ajax()
+                                                             .PageSize(20)
+                                                             .ServerOperation(true)
+                                                             //.Events(events => events.Error("errorHandler"))
+                                                             .Read(read => read.Action("GetVoyageBolDetails", "Manifest", new { voyageDetailsId = Model.VoyageDetailsId }))
+                                     )
+                            //.Events(events => events.DataBound("dataBound"))
+                    )
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script id="template" type="text/kendo-tmpl">
+    @(Html.Kendo().Grid<EManifestServices.DAL.ContainerDetails>()
+                            .Name("grid_#=BOLDetailsId#") // template expression, to be evaluated in the master context
+                            .Columns(columns =>
+                            {
+                                columns.Bound(p => p.ContainerNo).Width(200);
+                                columns.Bound(p => p.CheckDigit).Width(200);
+                                columns.Bound(p => p.ISOCode).Width(200);
+                                columns.Bound(p => p.TareWeight).Width(200);
+                                columns.Bound(p => p.SealNumber).Width(200);
+                                columns.ForeignKey(p => p.ContainerOwnerType, (System.Collections.IEnumerable)ViewData["ContainerOwnerTypes"], "Value", "Text")
+.Title("ContainerOwnerType").Width(300);
+                            })
+                            .ClientDetailTemplateId("consignmenttemplate")
+                            .DataSource(dataSource => dataSource
+                                .Ajax()
+                                .PageSize(10)
+                                .Read(read => read.Action("GetBolContainerDetails", "Manifest", new { bolDetailsId = "#=BOLDetailsId#" }))
+                            )
+                            //.Events(events => events.DataBound("dataBound"))
+                            .Pageable()
+                            .Filterable()
+                 .Resizable(resizable => resizable.Columns(true))
+                            .Sortable()
+                            .HtmlAttributes(new { style = "width:min-content ;" })
+                            .ToClientTemplate()
+    )
+</script>
+<script id="consignmenttemplate" type="text/kendo-tmpl">
+    @(Html.Kendo().Grid<EManifestServices.DAL.ConsignmentDetails>()
+                                    .Name("grid_#=ContainerDetailsId#") // template expression, to be evaluated in the master context
+                                    .Columns(columns =>
+                                    {
+                                        columns.Bound(p => p.SerialNumber).Width(200);
+                                        columns.Bound(p => p.MarksAndNumbers).Width(200);
+                                        columns.Bound(p => p.CargoDescription).Width(200);
+                                        columns.ForeignKey(p => p.UsedOrNew, (System.Collections.IEnumerable)ViewData["UsedNewSource"], "Value", "Text")
+                .Title("UsedOrNew").Width(200);
+                                        columns.Bound(p => p.CommodityCode).Width(200);
+                                        columns.Bound(p => p.ConsignmentPackages).Width(200);
+                                        columns.Bound(p => p.PackageType).Width(200);
+                                        columns.Bound(p => p.PackageTypeCode).Width(200);
+                                        columns.Bound(p => p.NumberOfPallets).Width(200);
+                                        columns.Bound(p => p.ConsignmentWeight).Width(200);
+
+                                        columns.Bound(p => p.ConsignmentValume).Width(200);
+                                        columns.ForeignKey(p => p.DangerousGoodsIndicator, (System.Collections.IEnumerable)ViewData["YesNoSource"], "Value", "Text")
+        .Title("DangerousGoodsIndicator").Width(200);
+                                        columns.Bound(p => p.IMOClassNumber).Width(200);
+                                        columns.Bound(p => p.UnNumberOfDangerousGoods).Width(200);
+                                        columns.Bound(p => p.FlashPoint).Width(200);
+                                        columns.ForeignKey(p => p.UnitOfTemperatureForFlashPoint, (System.Collections.IEnumerable)ViewData["TemperaturesSource"], "Value", "Text")
+        .Title("UnitOfTemperatureForFlashPoint").Width(200);
+                                        columns.ForeignKey(p => p.StorageRequestedForDangerousGoods, (System.Collections.IEnumerable)ViewData["StorageRequestCodesSource"], "Value", "Text")
+        .Title("StorageRequestedForDangerousGoods").Width(200);
+                                        columns.ForeignKey(p => p.RefrigerationRequired, (System.Collections.IEnumerable)ViewData["YesNoSource"], "Value", "Text")
+        .Title("RefrigerationRequired").Width(200);
+                                        columns.Bound(p => p.MinimumTemperatureOfRefrigeration).Width(200);
+                                        columns.Bound(p => p.MaximumTemperatureOfRefrigeration).Width(200);
+
+                                        columns.ForeignKey(p => p.UnitOfTemperatureForRegrigeration, (System.Collections.IEnumerable)ViewData["TemperaturesSource"], "Value", "Text")
+        .Title("UnitOfTemperatureForRegrigeration").Width(200);
+                                    })
+
+                                    .ClientDetailTemplateId("vehicleTemplate")
+                                    .DataSource(dataSource => dataSource
+                                        .Ajax()
+                                        .PageSize(10)
+                                        .Read(read => read.Action("GetContainerConsignmentDetails", "Manifest", new { containerDetailsId = "#=ContainerDetailsId#" }))
+                                    )
+                                    //.Events(events => events.DataBound("dataBound"))
+                                    .Pageable()
+                                    .Filterable()
+                         .Resizable(resizable => resizable.Columns(true))
+                                    .Sortable()
+                                    .HtmlAttributes(new { style = "width:min-content ;" })
+                                    .ToClientTemplate()
+    )
+</script>
+<script id="vehicleTemplate" type="text/kendo-tmpl">
+    @(Html.Kendo().Grid<EManifestServices.DAL.VehicleDetails>()
+                                    .Name("grid_#=ConsignmentDetailsId#") // template expression, to be evaluated in the master context
+                                    .Columns(columns =>
+                                    {
+                                        columns.Bound(p => p.SerialNumber).Width(200);
+                                        columns.ForeignKey(p => p.VehicleEquipmentIndicator, (System.Collections.IEnumerable)ViewData["VehicleEquipmentIndicatorsSource"], "Value", "Text")
+        .Title("VehicleEquipmentIndicator").Width(200);
+                                        columns.ForeignKey(p => p.UsedOrNew, (System.Collections.IEnumerable)ViewData["UsedNewSource"], "Value", "Text")
+        .Title("UsedOrNew").Width(200);
+                                        columns.Bound(p => p.ChasisNumber).Width(200);
+                                        columns.Bound(p => p.CaseNumber).Width(200);
+
+                                        columns.Bound(p => p.Make).Width(200);
+                                        columns.Bound(p => p.Model).Width(200);
+                                        columns.Bound(p => p.EngineNumber).Width(200);
+                                        columns.Bound(p => p.YearBuilt).Width(200);
+                                        columns.Bound(p => p.Color).Width(200);
+
+                                        columns.ForeignKey(p => p.RollingOrStatic, (System.Collections.IEnumerable)ViewData["RollingStaticSource"], "Value", "Text")
+        .Title("RollingOrStatic").Width(200);
+                                        columns.Bound(p => p.DescriptionOfGood).Width(200);
+                                        columns.Bound(p => p.AdditionalAccesseries).Width(200);
+                                        columns.Bound(p => p.WeightInKg).Width(200);
+                                        columns.Bound(p => p.Volume).Width(200);
+                                        columns.Bound(p => p.Remarks).Width(200);
+                                    })
+                                    .DataSource(dataSource => dataSource
+                                        .Ajax()
+                                        .PageSize(10)
+                                        .Read(read => read.Action("GetConsignmentVehicleDetails", "Manifest", new { consignmentDetailsId = "#=ConsignmentDetailsId#" }))
+                                    )
+                                    //.Events(events => events.DataBound("dataBound"))
+                                    .Pageable()
+                                    .Filterable()
+                         .Resizable(resizable => resizable.Columns(true))
+                                    .Sortable()
+                                    .HtmlAttributes(new { style = "width:min-content;" })
+                                    .ToClientTemplate()
+    )
+</script>
+<script>
+    function dataBound() {
+        for (var i = 0; i < this.columns.length; i++) {
+            this.autoFitColumn(i);
+        }
+    }
+</script>
+

@@ -1,0 +1,12 @@
+D:\Work\Alraiya\PortAuthority\EManifestServices\EManifestClient\bin\Release\EManifestClient.dll.config
+D:\Work\Alraiya\PortAuthority\EManifestServices\EManifestClient\bin\Release\EManifestClient.dll
+D:\Work\Alraiya\PortAuthority\EManifestServices\EManifestClient\bin\Release\EManifestClient.pdb
+D:\Work\Alraiya\PortAuthority\EManifestServices\EManifestClient\bin\Release\Newtonsoft.Json.dll
+D:\Work\Alraiya\PortAuthority\EManifestServices\EManifestClient\bin\Release\System.Net.Http.Formatting.dll
+D:\Work\Alraiya\PortAuthority\EManifestServices\EManifestClient\bin\Release\Newtonsoft.Json.xml
+D:\Work\Alraiya\PortAuthority\EManifestServices\EManifestClient\bin\Release\System.Net.Http.Formatting.xml
+D:\Work\Alraiya\PortAuthority\EManifestServices\EManifestClient\obj\Release\EManifestClient.csproj.CoreCompileInputs.cache
+D:\Work\Alraiya\PortAuthority\EManifestServices\EManifestClient\obj\Release\EManifestClient.csproj.CopyComplete
+D:\Work\Alraiya\PortAuthority\EManifestServices\EManifestClient\obj\Release\EManifestClient.dll
+D:\Work\Alraiya\PortAuthority\EManifestServices\EManifestClient\obj\Release\EManifestClient.pdb
+D:\Work\Alraiya\PortAuthority\EManifestServices\EManifestClient\obj\Release\EManifestClient.csprojAssemblyReference.cache

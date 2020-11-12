@@ -1,0 +1,92 @@
+﻿@model EManifestServices.Models.UserModel
+
+@{
+    ViewBag.Title = "UserData";
+}
+<div class="card card-shadow mb-4">
+    <div class="card-header">
+        <div class="card-title">
+            User data
+        </div>
+    </div>
+    <div class="card-body">
+        @using (Html.BeginForm("UserData", "Account", FormMethod.Post, new { id = "UserDataFrom", enctype = "multipart/form-data" }))
+        {
+            @Html.HiddenFor(m => m.UserId)
+            if (!Html.ValidationSummary().ToString().Contains("display:none"))
+            {
+                <div class="alert alert-danger">
+                    <strong>Alert ! </strong> @Html.ValidationSummary()
+                </div>
+            }
+            @Html.AntiForgeryToken()
+            <div class="form-group">
+                <label for="UserName" class="text-muted">Username</label>
+                @Html.TextBoxFor(m => m.UserName, new { @placeholder = "Enter username", required = "required", validationmessage = "Enter {0}", @class = "form-control" })
+            </div>
+            <div class="form-group">
+                <label for="Email" class="text-muted">User Email address</label>
+                @Html.TextBoxFor(m => m.Email, new { @placeholder = "Enter User Email", required = "required", validationmessage = "Enter {0}", type = "email", data_email_msg = "Email format is not valid", @class = "form-control" })
+            </div>
+            <div class="form-group">
+                <label for="Password" class="text-muted">Password</label>
+                @Html.PasswordFor(m => m.Password, new { @placeholder = "Password", @class = "form-control" })
+            </div>
+            <div class="form-group">
+                <label for="UserType" class="text-muted">User Type</label>
+                @(Html.Kendo().ComboBoxFor(m => m.UserType)
+                  .Filter("contains")
+                 .DataTextField("Text")
+                  .DataValueField("Value")
+                  .HtmlAttributes(new { @class = "form-control",required="required", validationmessage = "Choose {0}" })
+                  .Placeholder("Select User Type...")
+                  .BindTo((System.Collections.IEnumerable)ViewData["UserTypesSource"])
+                )
+            </div>
+            <div class="form-group">
+                <label for="CarrierId" class="text-muted">Carrier</label>
+                @(Html.Kendo().ComboBoxFor(m => m.CarrierId)
+                  .Filter("contains")
+                 .DataTextField("CarrierName")
+                  .DataValueField("CarrierId")
+                  .HtmlAttributes(new { @class = "form-control" })
+                  .Placeholder("Select carrier...")
+                  .DataSource(source =>
+                  {
+                      source.Read(read =>
+                      {
+                          read.Action("GetCarriersCombo", "Account");
+                      })
+                      .ServerFiltering(false);
+                  })
+                )
+            </div>
+            <div class="form-group checkbox">
+                <label class='custom-control custom-checkbox'>
+                    @Html.CheckBoxFor(m => m.IsActive, new { @class = "custom-control-input" })
+                    <span class='custom-control-indicator'></span>
+                    <span class='custom-control-description'>Active</span>
+                </label>
+            </div>
+            <button type="submit" class="btn btn-success btn-flat m-b-30 m-t-30">
+                Save
+            </button>
+        }
+
+    </div>
+</div>
+
+<script>
+    $(function () {
+        var validator = $("#UserDataFrom").kendoValidator().data("kendoValidator");
+
+    });
+
+    function onAdditionalData() {
+        return {
+            text: $("#CarrierId").val()
+        };
+    }
+</script>
+
+

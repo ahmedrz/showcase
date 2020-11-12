@@ -1,0 +1,223 @@
+﻿@{
+    ViewBag.Title = "E-Manifests";
+}
+<style>
+
+    .k-grid table tbody tr td {
+        /*border-bottom-width: 1px !important;
+        border-left-width: 1px !important;*/
+    }
+</style>
+<style>
+    .k-detail-cell .k-tabstrip .k-content {
+        padding: 0.2em;
+    }
+
+    .voyage-details ul {
+        list-style: none;
+        font-style: italic;
+        margin: 15px;
+        padding: 0;
+    }
+
+        .voyage-details ul li {
+            margin: 0;
+            line-height: 1.7em;
+        }
+
+    .voyage-details label {
+        display: inline-block;
+        /*width: 120px;*/
+        padding-right: 10px;
+        text-align: right;
+        font-style: normal;
+        font-weight: bold;
+    }
+</style>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-xl-12 col-lg-12 mb-4">
+            <div class="card card-shadow">
+                <div class="card-header">
+                    <div class="card-title">
+                        <h4>Upload Manifest Using the file created with IQMan software</h4>
+                    </div>
+                </div>
+                <div class="card-body">
+                    @(Html.Kendo().Upload()
+.Name("files")
+.Async(a => a
+.Save("Async_Save", "Manifest")
+//.Remove("Async_Remove", "Manifest")
+.AutoUpload(false)
+)
+.Validation(validation => validation.AllowedExtensions(new string[] { ".txt" }).MaxFileSize(5120000))
+.Events(events => events
+.Error("onError")
+.Success("onSuccess")
+)
+                    )
+                    <a href="@Url.Action("Get", "Files", new { httproute = "DefaultApi", filename = "IQMan.zip" })">Download IQMan software</a>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+    <div class="row">
+        <div class="col-xl-12 col-12-6 mb-4">
+            <div class="card card-shadow">
+                <div class="card-header">
+                    <div class="card-title">
+                        <h4>Uploaded manifests</h4>
+                    </div>
+                </div>
+                <div class="card-body">
+                    @(Html.Kendo().Grid<EManifestServices.Models.VoyageModel>()
+.Name("grid")
+.Columns(columns =>
+{
+columns.Bound(c => c.VoyageDetailsId).Hidden();
+columns.Bound(c => c.VesselName).Title("Vessel Name").Width(150);
+columns.Bound(c => c.AgentVoyageNumber).Title("Voyage No").Width(150);
+columns.Bound(c => c.ExpectedToArriveDate).Format("{0: dd-MM-yyyy}").Title("Expected Arrival").Width(200);
+columns.Bound(c => c.PortCodeOfDischarge).Title("Port Code").Width(150); 
+                //columns.Bound(c => c.LineCode).Title("Line Code").Width(100); ;
+                //columns.Bound(c => c.NumberOfInstalment).Title("Instalment No").Width(100); ;
+                //columns.Bound(c => c.UploadDate).Format("{0: dd-MM-yyyy HH:mm}").Title("Upload Date").Width(200);
+                //columns.Bound(c => c.FileName).Title("Filename").Width(200);
+                columns.Bound(c => c.Status.StatusDesc).Title("Status").Width(150); ;
+                //columns.Command(custom => custom.Custom("View").Click("ViewManifest")).Width(100);
+                columns.Command(custom => custom.Custom("Delete").Click("DeleteManifest")).Width(120);
+})
+.ClientDetailTemplateId("template")
+.HtmlAttributes(new { style = "height: 550px;" })
+.Scrollable()
+.Filterable()
+.Sortable()
+.Resizable(resizable => resizable.Columns(true))
+.Pageable(pageable => pageable
+.Refresh(true)
+.PageSizes(true)
+.ButtonCount(5))
+.DataSource(dataSource => dataSource
+.Ajax()
+.Read(read => read.Action("GetManifests", "Manifest"))
+.Events(events => events.Error("getDataError"))
+.PageSize(20)
+))
+                </div>
+            </div>
+        </div>
+    </div>
+    <script id="template" type="text/kendo-tmpl">
+        @(Html.Kendo().TabStrip()
+                                        .Name("tabStrip_#=VoyageDetailsId#")
+                                        .SelectedIndex(0)
+                                        .Animation(animation => animation.Open(open => open.Fade(FadeDirection.In)))
+                                        .Items(items =>
+                                        {
+                                    @*items.Add().Text("BOLDetails").Content(@<text>
+                                              @(Html.Kendo().Grid<Kendo.Mvc.Examples.Models.OrderViewModel>()
+                                                                  .Name("grid_#=VoyageDetailsId#") // template expression, to be evaluated in the master context
+                                                                  .Columns(columns =>
+                                                                  {
+                                                                          columns.Bound(o => o.OrderID).Title("ID").Width(100);
+                                                                          columns.Bound(o => o.ShipCountry).Width(150);
+                                                                          columns.Bound(o => o.ShipAddress).ClientTemplate("\\#= ShipAddress \\#"); // escaped template expression, to be evaluated in the child/detail context
+                                                                          columns.Bound(o => o.ShipName).Width(190);
+                                                                      })
+                                                                  .DataSource(dataSource => dataSource
+                                                                      .Ajax()
+                                                                      .PageSize(5)
+                                                                      .Read(read => read.Action("GetBOLDetails", "Manifest", new { voyageDetailsId = "#=VoyageDetailsId#" }))
+                                                                  )
+                                                                  .Pageable()
+                                                                  .Sortable()
+                                                                  .ToClientTemplate())
+                                          </text>
+                                        );*@
+                                            items.Add().Text("Voyage Information").Content(
+                        "<div class='voyage-details row' style='width:100%;'>" +
+                        "<div class='col-lg-3'>" +
+                        "<ul>" +
+                        "<li><label>Vessel Name : </label> #= VesselName #</li>" +
+                        "<li><label>Voyage No : </label> #= AgentVoyageNumber #</li>" +
+                        "<li><label>Instalment No: </label> #= NumberOfInstalment #</li>" +
+                        "<li><label>Port Code : </label> #= PortCodeOfDischarge #</li>" +
+                        "</ul>" +
+                        "</div>" +
+                        "<div class='col-lg-3'>" +
+                        "<ul>" +
+                        "<li><label>Line Code : </label> #= LineCode #</li>" +
+                        "<li><label>Agent Code : </label> #= VoyageAgentCode #</li>" +
+                        "<li><label>Upload Date : </label> #=kendo.toString(UploadDate,'MM/dd/yyyy')#</li>" +
+                        "<li><label>File Name : </label> #= FileName #</li>" +
+                        "</ul>" +
+                        "</div>" +
+                        "<div class='col-lg-3'>" +
+                        "<ul>" +
+                        "<li><label>Status : </label> #= Status.StatusDesc #</li>" +
+                        "</ul>" +
+                        "</div>" +
+                        "</div>"
+                        );
+}).ToClientTemplate())
+    </script>
+
+    <script>
+
+         function DeleteManifest(e) {
+        if (confirm('Are you sure you want to delete this manifest?')) {
+            var dataItem = this.dataItem($(e.currentTarget).closest("tr"));
+
+                $.ajax({
+                    url: '@Url.Action("DeleteManifest")/' + dataItem.VoyageDetailsId,
+                    contentType: "application/json; charset=utf-8",
+                    success: function (data) {
+                        if (data.Success === true) {
+                            $('#grid').data('kendoGrid').dataSource.read();
+                            $('#grid').data('kendoGrid').refresh();
+                            addAlert('Manifest deleted.', true);
+                        }
+                        else {
+                           // alert(data.Message);
+                            addAlert(data.Message, false);
+                        }
+
+                    },
+                    error: function (req, status, errorObj) {
+                        addAlert(errorObj, false);
+                        //alert(errorObj);
+                    }
+                });
+            }
+        }
+
+        function onSuccess(e) {
+           // console.log("Success (" + e.operation + ") :: "+ e + getFileInfo(e));
+            // window.location = '@Url.Action("Index")'
+            addAlert('Manifest uploaded successfully you will be notified about the validity of the file once processed.',true)
+        }
+
+        function onError(e) {
+            //alert(e.XMLHttpRequest.responseText)
+            try {
+                var message = JSON.parse(e.XMLHttpRequest.responseText);
+                 if (message.Error === "NotAuthorized") {
+                window.location = '@Url.Action("Login","Account")';
+                }
+            }
+            catch (e) {
+            }
+            addAlert(e.XMLHttpRequest.responseText, false);
+           // console.log("Error (" + e.operation + ") :: "+ e + getFileInfo(e));
+        }
+         function getDataError(e) {
+             if (e.errorThrown === 'Forbidden') {                 
+                 window.location = '@Url.Action("Login","Account")';
+                 addAlert('Session expired login to access this resource.', false);
+             }           
+        }
+    </script>
+</div>

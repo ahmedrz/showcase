@@ -1,0 +1,56 @@
+﻿<Window x:Class="IQMan.winMain"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:IQMan"
+        xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"
+        mc:Ignorable="d"
+        WindowState="Maximized"
+        WindowStartupLocation="CenterScreen"
+        Title="IQMAN SOFTWARE" Height="900" Width="1600">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <telerik:RadMenu>
+            <!--1-->
+            <telerik:RadMenuItem>
+                <telerik:RadMenuItem.Header>
+                    <TextBlock Text="Voyages"/>
+                </telerik:RadMenuItem.Header>
+                <telerik:RadMenuGroupItem>
+                    <telerik:RadMenuItem IconColumnWidth="0" Padding="20,5,20,5"  x:Name="itmVoyages" Click="itmVoyages_Click" Header="Voyages"/>
+                </telerik:RadMenuGroupItem>
+            </telerik:RadMenuItem>
+
+            <!--2-->
+            <telerik:RadMenuItem>
+                <telerik:RadMenuItem.Header>
+                    <TextBlock Text="Data" />
+                </telerik:RadMenuItem.Header>
+                <telerik:RadMenuGroupItem>
+                    <telerik:RadMenuItem Padding="20,5,20,5" IconColumnWidth="0" x:Name="itmDownloadData" Click="itmDownloadData_Click" Header="Download Data"/>
+                </telerik:RadMenuGroupItem>
+            </telerik:RadMenuItem>
+            <!--3-->
+            <telerik:RadMenuItem>
+                <telerik:RadMenuItem.Header>
+                    <TextBlock Text="Help" />
+                </telerik:RadMenuItem.Header>
+                <telerik:RadMenuGroupItem>
+                    <telerik:RadMenuItem IconColumnWidth="0" Padding="20,5,20,5"   x:Name="itmCheckUpdate" Click="itmCheckUpdate_Click" Header="Check For Update" />
+                    <telerik:RadMenuItem IconColumnWidth="0" Padding="20,5,20,5"   x:Name="itmUpdateConf" Click="itmUpdateConf_Click" Header="Update Configuration"  />
+                </telerik:RadMenuGroupItem>
+            </telerik:RadMenuItem>
+        </telerik:RadMenu>
+        <Grid Grid.Row="1">
+            <Image RenderOptions.BitmapScalingMode="HighQuality" Source="Images/Background.png" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"  Stretch="Fill" Margin="10" >
+
+            </Image>
+
+        </Grid>
+
+    </Grid>
+</Window>

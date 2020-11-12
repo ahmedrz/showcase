@@ -1,0 +1,108 @@
+﻿
+@{
+    ViewBag.Title = "PackageCodes";
+}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-xl-12 col-lg-12 mb-4">
+            <div class="card card-shadow">
+                <div class="card-header">
+                    <div class="card-title">
+                        <h4>Country Codes</h4>
+                    </div>
+                </div>
+                <div class="card-body">
+                    @(Html.Kendo().Grid<EManifestServices.DAL.PackageCodes>()
+                      .Name("Grid")
+                       .Columns(columns =>
+                       {
+                           columns.Bound(t => t.PackageCodeId).Visible(false);
+                           columns.Bound(p => p.PackageCode).Width(150);
+                           columns.Bound(p => p.PackageDescription).Width(150);
+                           columns.Command(command => command.Destroy()).Width(150);
+                       })
+                       .HtmlAttributes(new { style = "height: 550px;" })
+                      .ToolBar(toolbar =>
+                      {
+                          toolbar.Create();
+                          toolbar.Save();
+                      })
+                      .Editable(editable => editable.Mode(GridEditMode.InCell))
+                      .Pageable()
+                      .Filterable()
+                      .Navigatable()
+                      .Scrollable()
+                      .DataSource(dataSource => dataSource
+                          .Custom()
+                          .Batch(false)
+                          .Type("odata-v4")
+                          .Schema(schema => schema
+                              .Model(m =>
+                              {
+                                  m.Id(t => t.PackageCodeId);
+                                  m.Field(t => t.PackageCode);
+                                  m.Field(t => t.PackageDescription);
+                              }))
+                          .Transport(t =>
+                          {
+                              t.Read(new { url = new Kendo.Mvc.ClientHandlerDescriptor() { HandlerName = "read" },
+                                  beforeSend = new Kendo.Mvc.ClientHandlerDescriptor()
+                                  {
+                                      HandlerName = "onBeforeSend"
+                                  }
+                              });
+                              t.Update(new { url = new Kendo.Mvc.ClientHandlerDescriptor() { HandlerName = "update" },
+                                  beforeSend = new Kendo.Mvc.ClientHandlerDescriptor()
+                                  {
+                                      HandlerName = "onBeforeSend"
+                                  }
+                              });
+                              t.Create(new { url = new Kendo.Mvc.ClientHandlerDescriptor() { HandlerName = "create" },
+                                  beforeSend = new Kendo.Mvc.ClientHandlerDescriptor()
+                                  {
+                                      HandlerName = "onBeforeSend"
+                                  }
+                              });
+                              t.Destroy(new { url = new Kendo.Mvc.ClientHandlerDescriptor() { HandlerName = "destroy" },
+                                  beforeSend = new Kendo.Mvc.ClientHandlerDescriptor()
+                                  {
+                                      HandlerName = "onBeforeSend"
+                                  }
+                              });
+                              //t.Batch(new { url = new Kendo.Mvc.ClientHandlerDescriptor() { HandlerName = "batch" } });
+                          })
+                     .PageSize(20)
+                     .ServerPaging(true)
+                     .ServerFiltering(true)
+                     )
+                    )
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+    //function batch() {
+    //    return "http://localhost:18062/odata/$batch";
+    //}
+    function onBeforeSend(e) {
+        e.setRequestHeader("Authorization", '@ViewBag.Token');
+    }
+    function read() {
+        return "@Url.Content("~")odata/packagecodes";
+    }
+
+    function update(dataItem) {
+        return "@Url.Content("~")odata/packagecodes(" + dataItem.PackageCodeId + ")";
+    }
+
+    function create(dataItem) {
+        //delete dataItem.CountryCode;
+        return "@Url.Content("~")odata/packagecodes";
+    }
+
+    function destroy(dataItem) {
+        return "@Url.Content("~")odata/packagecodes(" + dataItem.PackageCodeId + ")";
+    }
+    </script>
+</div>
+

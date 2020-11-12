@@ -1,0 +1,57 @@
+﻿<telerik:RadWindow x:Class="EmanifestDownloader.MainWindow"
+                xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                   xmlns:telerikControls="clr-namespace:Telerik.Windows.Controls;assembly=Telerik.Windows.Controls"
+                   telerikControls:StyleManager.Theme="Expression_Dark"
+                xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"
+                   Header="Agent's Uploaded Manifests"
+                Background="{DynamicResource WindowBackground}"                   
+                Foreground="{DynamicResource ControlForeground_Normal}" Height="350" Width="600" WindowStartupLocation="CenterScreen" WindowState="Maximized" Closed="RadWindow_Closed">
+    <Grid>
+        <Grid.Resources>
+            <Style x:Key="MenuItemContainerStyle" TargetType="telerik:RadMenuItem">
+                <Setter Property="Header" Value="{Binding Text}"/>
+                <Setter Property="ItemsSource" Value="{Binding SubItems}"/>
+                <Setter Property="IsEnabled" Value="{Binding IsEnabled}"/>
+            </Style>
+        </Grid.Resources>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="45"/>
+            <RowDefinition Height="30"/>
+        </Grid.RowDefinitions>
+        <telerik:RadButton Click="btnRefresh_Click" Margin="15,10,0,0" Width="100" Height="30" HorizontalAlignment="Left" VerticalAlignment="Top" x:Name="btnRefresh" Content="Refresh"></telerik:RadButton>
+        <CheckBox IsChecked="True" x:Name="chbAutoRefresh" Content="Auto Refresh" Margin="346,10,0,0" Width="113" Height="30" HorizontalAlignment="Left" VerticalAlignment="Top" Unchecked="chbAutoRefresh_Unchecked" Checked="chbAutoRefresh_Checked"></CheckBox>
+        <telerik:RadNumericUpDown Value="5000" NumberDecimalDigits="0" Minimum="500" Maximum="10000" x:Name="txtInterval" Height="30" VerticalAlignment="Top" Margin="459,10,0,0" HorizontalAlignment="Left" Width="113" ValueChanged="txtInterval_ValueChanged"/>
+        <telerik:RadGridView Margin="15,45,15,0" x:Name="voyagesGrid" 
+                             IsReadOnly="True"
+                             CanUserInsertRows="False"
+                             AutoGenerateColumns="False"
+                             CanUserDeleteRows="False"
+                             ShowGroupPanel="False"
+                             ItemsSource="{Binding Path=Voyages}">
+            <telerik:RadGridView.Columns>
+                <telerik:GridViewDataColumn Header="Vessel Name" DataMemberBinding="{Binding VesselName}"/>
+                <telerik:GridViewDataColumn Header="Voyage No" DataMemberBinding="{Binding VoyageNo}"/>
+                <telerik:GridViewDataColumn Header="Port Code" DataMemberBinding="{Binding PortCode}"/>
+                <telerik:GridViewDataColumn Header="Expected Arrival" DataMemberBinding="{Binding ExpectedArrival ,StringFormat='{}{0:dd/MM/yyyy}'}"/>
+                <telerik:GridViewDataColumn Header="Port Code" DataMemberBinding="{Binding Installment}"/>
+                <telerik:GridViewDataColumn Header="Downloaded" DataMemberBinding="{Binding Downloaded}"/>
+            </telerik:RadGridView.Columns>
+            <telerik:RadContextMenu.ContextMenu>
+                <telerik:RadContextMenu x:Name="GridContextMenu" 
+                                        ItemContainerStyle="{StaticResource MenuItemContainerStyle}"
+                                        Opened="GridContextMenu_Opened"
+                                        ItemClick="GridContextMenu_ItemClick"/>
+            </telerik:RadContextMenu.ContextMenu>
+        </telerik:RadGridView>
+        <telerik:RadDataPager Margin="15,0,15,0" x:Name="radDataPager" Grid.Row="1"
+                              VerticalAlignment="Top"
+                          Source="{Binding Items, ElementName=voyagesGrid}" 
+                          PageSize="15" />
+        <StackPanel x:Name="pnlProgress" Orientation="Horizontal" Grid.Row="2" Visibility="Hidden">
+            <telerik:Label>Downloading Manifest</telerik:Label>
+            <ProgressBar IsIndeterminate="True" Width="200" Height="15"></ProgressBar>
+        </StackPanel>
+    </Grid>
+</telerik:RadWindow>

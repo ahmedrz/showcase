@@ -1,0 +1,43 @@
+﻿@model EManifestServices.Models.NotificationModel
+
+@{
+    ViewBag.Title = "GetNotification";
+}
+<div class="card card-shadow mb-4">
+    <div class="card-header">
+        <div class="card-title">
+            Notification Data
+        </div>
+    </div>
+    <div class="card-body">
+        <h3>
+            <span style="white-space: pre-line">@Model.Header</span>
+        </h3>
+        
+        <br />
+        <span style="white-space: pre-line">@Model.Details</span>
+        <br />
+        <h3 style="margin-top:10px;">
+            <span>Date : </span>
+            <span id="ntDate" style="white-space: pre-line;">@Model.NotificationDate.Value.ToString("o")</span>            
+        </h3>
+    </div>
+
+</div>
+<script>
+    $(function () {
+        var date =new Date($('#ntDate').text());
+        $('#ntDate').text(convertUTCDateToLocalDate(date))
+    })
+    function convertUTCDateToLocalDate(date) {
+        var newDate = new Date(date.getTime() + date.getTimezoneOffset() * 60 * 1000);
+
+        var offset = date.getTimezoneOffset() / 60;
+        var hours = date.getHours();
+
+        newDate.setHours(hours - offset);
+
+        return newDate;
+    }
+</script>
+

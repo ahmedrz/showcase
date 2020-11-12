@@ -1,0 +1,83 @@
+﻿
+@{
+    ViewBag.Title = "ApiClients";
+}
+
+<div class="row">
+    <div class="col-xl-12 col-12-6 mb-4">
+        <div class="card card-shadow">
+            <div class="card-header">
+                <div class="card-title">
+                    <h4>Api Clients</h4>
+                </div>
+            </div>
+            <div class="card-body">
+                @(Html.ActionLink("Add new client", "ClientData", "Account", null, new { @class = "k-button textButton k-primary" }))
+                @(Html.Kendo().Grid<EManifestServices.Models.ApiClientModel>()
+                         .Name("grid")
+                        .Columns(columns =>
+                        {
+                            columns.Bound(c => c.ApiClientId).Hidden();
+                            columns.Bound(c => c.ApiClientName).Title("Client Name").Width(200);
+                            columns.Bound(c => c.Role).Title("Role name");
+                            columns.Bound(c => c.IsActive).Title("Active").ClientTemplate("<label class='custom-control custom-checkbox'><input type='checkbox' class='custom-control-input' disabled='' #= IsActive ? checked='checked' :'' #><span class='custom-control-indicator'></span> <span class='custom-control-description'>Active</span></label>");
+                            columns.Command(custom => custom.Custom("View").Click("ViewClient")).Width(120);
+                            columns.Command(custom => custom.Custom("Delete").Click("DeleteClient")).Width(120);
+                        })
+.HtmlAttributes(new { style = "height: 550px;" })
+.Scrollable()
+.Filterable()
+.Sortable()
+.Resizable(resizable => resizable.Columns(true))
+.Pageable(pageable => pageable
+ .Refresh(true)
+ .PageSizes(true)
+ .ButtonCount(5))
+.DataSource(dataSource => dataSource
+      .Ajax()
+      .Read(read => read.Action("GetClients", "Account"))
+      .PageSize(20)
+)
+ )
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+
+
+    function ViewClient(e) {
+        var dataItem = this.dataItem($(e.currentTarget).closest("tr"));
+        window.location = '@Url.Action("ClientData","Account")/' + dataItem.ApiClientId;
+    }
+    function DeleteClient(e) {
+        if (confirm('Are you sure you want to delete this ApiClient?')) {
+            var dataItem = this.dataItem($(e.currentTarget).closest("tr"));
+
+                $.ajax({
+                    url: '@Url.Action("DeleteApiClient")/' + dataItem.ApiClientId,
+                    contentType: "application/json; charset=utf-8",
+                    success: function (data) {
+                        if (data.Success === true) {
+                            $('#grid').data('kendoGrid').dataSource.read();
+                            $('#grid').data('kendoGrid').refresh();
+                            addAlert('ApiClient deleted.', true);
+                        }
+                        else {
+                           // alert(data.Message);
+                            addAlert(data.Message, false);
+                        }
+
+                    },
+                    error: function (req, status, errorObj) {
+                        addAlert(errorObj, false);
+                        //alert(errorObj);
+                    }
+                });
+            }
+        }
+
+</script>
+

@@ -1,0 +1,55 @@
+﻿@model EManifestServices.Models.ProfileModel
+
+@{
+    ViewBag.Title = "UserProfile";
+}
+<div class="card card-shadow mb-4">
+    <div class="card-header">
+        <div class="card-title">
+            User Profile
+        </div>
+    </div>
+    <div class="card-body">
+        @using (Html.BeginForm("UserProfile", "Account", FormMethod.Post, new { id = "UserProfileFrom", enctype = "multipart/form-data" }))
+        {
+            @Html.HiddenFor(m => m.UserId)
+            if (!Html.ValidationSummary().ToString().Contains("display:none"))
+            {
+                <div class="alert alert-danger">
+                    <strong>Alert ! </strong> @Html.ValidationSummary()
+                </div>
+            }
+            @Html.AntiForgeryToken()
+            <div class="form-group">
+                <label for="UserName" class="text-muted">Username</label>
+                @Html.TextBoxFor(m => m.UserName, new { @placeholder = "Enter username", required = "required", validationmessage = "Enter {0}", @class = "form-control" })
+            </div>
+            <div class="form-group">
+                <label for="Email" class="text-muted">User Email address</label>
+                @Html.TextBoxFor(m => m.Email, new { @placeholder = "Enter User Email", required = "required", validationmessage = "Enter {0}", type = "email", data_email_msg = "Email format is not valid", @class = "form-control" })
+            </div>
+            <div class="form-group">
+                <label for="oldPassword" class="text-muted">Password</label>
+                @Html.PasswordFor(m => m.OldPassword, new { @placeholder = "Password", @class = "form-control" })
+            </div>
+            <div class="form-group">
+                <label for="newPassword" class="text-muted">Password</label>
+                @Html.PasswordFor(m => m.NewPassword, new { @placeholder = "Password", @class = "form-control" })
+            </div>
+            <button type="submit" class="btn btn-success btn-flat m-b-30 m-t-30">
+                Save
+            </button>
+        }
+
+    </div>
+</div>
+
+<script>
+    $(function () {
+        var validator = $("#UserProfileFrom").kendoValidator().data("kendoValidator");
+
+    });
+    
+</script>
+
+

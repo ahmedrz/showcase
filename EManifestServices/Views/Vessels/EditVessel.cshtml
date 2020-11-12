@@ -1,0 +1,119 @@
+﻿@model EManifestServices.Models.VesselModel
+
+@{
+    ViewBag.Title = "EditVessel";
+}
+
+
+<div class="card card-shadow mb-4">
+    <div class="card-header">
+        <div class="card-title">
+            Vessel data
+        </div>
+    </div>
+    <div class="card-body">
+        @using (Html.BeginForm("EditVessel", "Vessels", FormMethod.Post, new { id = "VesselDataFrom", enctype = "multipart/form-data" }))
+        {
+            @Html.HiddenFor(m => m.VesselId)
+            if (!Html.ValidationSummary().ToString().Contains("display:none"))
+            {
+                <div class="alert alert-danger">
+                    <strong>Alert ! </strong> @Html.ValidationSummary()
+                </div>
+            }
+            @Html.AntiForgeryToken()
+            <div class="form-group">
+                <label for="VesselName" class="text-muted">Vessel name</label>
+                @Html.TextBoxFor(m => m.VesselName, new { @placeholder = "Enter vessel name", required = "required", validationmessage = "Enter {0}", @class = "form-control" })
+            </div>
+            <div class="form-group">
+                <label for="VesselCountry" class="text-muted">Vessel country</label>
+                @Html.TextBoxFor(m => m.VesselCountry, new { @placeholder = "Enter vessel country", required = "required", validationmessage = "Enter {0}", @class = "form-control" })
+            </div>
+            <div class="form-group">
+                <label for="custom">GRT</label>
+                @(Html.Kendo().NumericTextBoxFor(m => m.GRT)
+                    .Format("#.00 kg")
+                    .HtmlAttributes(new { @placeholder = "Enter vessel GRT", required = "required", validationmessage = "Enter {0}", @class = "form-control" })
+                )
+            </div>
+            <div class="form-group">
+                <label for="IMONo" class="text-muted">IMO No</label>
+                @Html.TextBoxFor(m => m.IMONo, new { @placeholder = "Enter IMO No", @class = "form-control" })
+            </div>
+            <div class="form-group">
+                <label for="CallSign" class="text-muted">Call sign</label>
+                @Html.TextBoxFor(m => m.CallSign, new { @placeholder = "Enter Call sign", @class = "form-control" })
+            </div>
+            <div class="form-group">
+                <label for="custom">LOA</label>
+                @(Html.Kendo().NumericTextBoxFor(m => m.LOA)
+                   .HtmlAttributes(new { @placeholder = "Enter LOA", @class = "form-control" })
+                )
+            </div>
+            <div class="form-group">
+                <label for="custom">LWL</label>
+                @(Html.Kendo().NumericTextBoxFor(m => m.LWL)
+                    .HtmlAttributes(new { @placeholder = "Enter LWL", @class = "form-control" })
+                )
+            </div>
+            <div class="form-group">
+                <label for="custom">DraftAFT</label>
+                @(Html.Kendo().NumericTextBoxFor(m => m.DraftAFT)
+                    .HtmlAttributes(new { @placeholder = "Enter DraftAFT", @class = "form-control" })
+                )
+            </div>
+
+            <div class="form-group">
+                <label for="custom">DraftFWD</label>
+                @(Html.Kendo().NumericTextBoxFor(m => m.DraftFWD)
+                  .HtmlAttributes(new { @placeholder = "Enter DraftFWD", @class = "form-control" })
+                )
+            </div>
+            <div class="form-group">
+                <label for="CarrierId" class="text-muted">Carrier</label>
+                @(Html.Kendo().ComboBoxFor(m => m.CarrierId)
+
+                        .Filter("contains")
+                       .DataTextField("CarrierName")
+                        .DataValueField("CarrierId")
+                        .HtmlAttributes(new { required = "required", validationmessage = "Choose {0}", @class = "form-control" })
+                        .Placeholder("Select carrier...")
+                        .DataSource(source =>
+                        {
+                            source.Read(read =>
+                            {
+                                read.Action("GetCarriersCombo", "Account");
+                            })
+                            .ServerFiltering(false);
+                        })
+                )
+            </div>
+
+            <button type="submit" class="btn btn-success btn-flat m-b-30 m-t-30">
+                Save
+            </button>
+        }
+
+    </div>
+</div>
+
+<script>
+    $(function () {
+        var validator = $("#VesselDataFrom").kendoValidator().data("kendoValidator");
+
+       
+
+
+    });
+</script>
+@if ((Session["User"] as EManifestServices.Models.UserModel).UserType!=1)
+{
+    <script type="text/javascript">
+        $(function () {
+            var carrierCombo = $('#CarrierId').data('kendoComboBox');
+            carrierCombo.readonly(true);
+        });
+    </script>
+}
+

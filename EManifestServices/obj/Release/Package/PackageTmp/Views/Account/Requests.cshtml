@@ -1,0 +1,93 @@
+﻿
+@{
+    ViewBag.Title = "Requests";
+}
+<div class="row">
+    <div class="col-xl-12 col-12-6 mb-4">
+        <div class="card card-shadow">
+            <div class="card-header">
+                <div class="card-title">
+                    <h4>Requests</h4>
+                </div>
+            </div>
+            <div class="card-body">
+                @(Html.Kendo().Grid<EManifestServices.Models.RegisterModel>()
+                                                                                                                         .Name("grid")
+     .Columns(columns =>
+     {
+         columns.Bound(c => c.RequestId).Hidden();
+         columns.Bound(c => c.CompanyName).Title("Company name").Width(200);
+         columns.Bound(c => c.Email).Title("Email");
+         columns.Bound(c => c.PhoneNo).Title("Phone no");
+         columns.Bound(c => c.RequestDate).Format("{0: dd-MM-yyyy HH:mm}").Title("Request Date").Width(150);
+         columns.Bound(c => c.UserName).Title("Username");
+         columns.Bound(c => c.Approved).Title("Approved").ClientTemplate("<label class='custom-control custom-checkbox'><input type='checkbox' class='custom-control-input' disabled='' #= Approved ? checked='checked' :'' #><span class='custom-control-indicator'></span> <span class='custom-control-description'>Approved</span></label>");
+         //columns.Bound(c => c.Approved).Title("Approved");
+         columns.Command(custom => custom.Custom("View").Click("ViewRequest")).Width(120);
+         columns.Command(custom => custom.Custom("Approve").Click("ApproveRequest")).Width(120);
+         //columns.Command(custom => custom.Custom("Stop").Click("StopRequest")).Width(100);
+     })
+ .HtmlAttributes(new { style = "height: 550px;" })
+ .Scrollable()
+ .Filterable()
+ .Sortable()
+ .Resizable(resizable => resizable.Columns(true))
+ .Pageable(pageable => pageable
+     .Refresh(true)
+     .PageSizes(true)
+     .ButtonCount(5))
+ .DataSource(dataSource => dataSource
+     .Ajax()
+     .Sort(sort => sort.Add("RequestDate").Descending())
+     .Read(read => read.Action("GetRequests", "Account"))
+     .PageSize(20)
+ )
+                )
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+
+
+        function ApproveRequest(e) {
+        if (confirm('Are you sure you want to approve the request?')) {
+            var dataItem = this.dataItem($(e.currentTarget).closest("tr"));
+            if (dataItem.Approved === true) {
+                alert("Request is already approved.");
+                return;
+            }
+                $.ajax({
+                    url: '@Url.Action("ApproveRequest")',
+                    contentType: "application/json; charset=utf-8",
+                    data: JSON.stringify( { requestId: dataItem.RequestId }),
+                    type: "POST",
+                    dataType: "json",
+                    success: function (data) {
+                        if (data.Success === true) {
+                            $('#grid').data('kendoGrid').dataSource.read();
+
+                                $('#grid').data('kendoGrid').refresh();
+                        }
+                        else {
+                            alert(data.Message);
+                        }
+
+                    },
+                    error: function (req, status, errorObj) {
+                        alert(errorObj);
+                    }
+                });
+            }
+        }
+
+         function ViewRequest(e) {
+       var dataItem = this.dataItem($(e.currentTarget).closest("tr"));
+             window.location = '@Url.Action("RequestData","Account")/' + dataItem.RequestId;
+        }
+
+</script>
+
+

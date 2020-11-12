@@ -1,0 +1,131 @@
+﻿
+@{
+    ViewBag.Title = "ManifestApproval";
+}
+
+<style>
+
+    .k-grid table tbody tr td {
+        /*border-bottom-width: 1px !important;
+        border-left-width: 1px !important;*/
+    }
+</style>
+<style>
+    .k-detail-cell .k-tabstrip .k-content {
+        padding: 0.2em;
+    }
+
+    .voyage-details ul {
+        list-style: none;
+        font-style: italic;
+        margin: 15px;
+        padding: 0;
+    }
+
+        .voyage-details ul li {
+            margin: 0;
+            line-height: 1.7em;
+        }
+
+    .voyage-details label {
+        display: inline-block;
+        /*width: 120px;*/
+        padding-right: 10px;
+        text-align: right;
+        font-style: normal;
+        font-weight: bold;
+    }
+</style>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-xl-12 col-12-6 mb-4">
+            <div class="card card-shadow">
+                <div class="card-header">
+                    <div class="card-title">
+                        <h4>Uploaded manifests</h4>
+                    </div>
+                </div>
+                <div class="card-body">
+                    @(Html.Kendo().Grid<EManifestServices.Models.VoyageModel>()
+.Name("grid")
+.Columns(columns =>
+{
+columns.Bound(c => c.VoyageDetailsId).Hidden();
+columns.Bound(c => c.VesselName).Title("Vessel Name").Width(150);
+columns.Bound(c => c.AgentVoyageNumber).Title("Voyage No").Width(150);
+columns.Bound(c => c.ExpectedToArriveDate).Format("{0: dd-MM-yyyy}").Title("Expected Arrival").Width(200);
+columns.Bound(c => c.PortCodeOfDischarge).Title("Port Code").Width(150); ;
+                //columns.Bound(c => c.LineCode).Title("Line Code").Width(100); ;
+                //columns.Bound(c => c.NumberOfInstalment).Title("Instalment No").Width(100); ;
+                //columns.Bound(c => c.UploadDate).Format("{0: dd-MM-yyyy HH:mm}").Title("Upload Date").Width(200);
+                //columns.Bound(c => c.FileName).Title("Filename").Width(200);
+                columns.Bound(c => c.Status.StatusDesc).Title("Status").Width(150); 
+                //columns.Command(custom => custom.Custom("View").Click("ViewManifest")).Width(100);
+                columns.Command(custom => custom.Custom("View").Click("ViewManifest")).Width(120);
+})
+.ClientDetailTemplateId("template")
+.HtmlAttributes(new { style = "height: 550px;" })
+.Scrollable()
+.Filterable()
+.Sortable()
+.Resizable(resizable => resizable.Columns(true))
+.Pageable(pageable => pageable
+.Refresh(true)
+.PageSizes(true)
+.ButtonCount(5))
+.DataSource(dataSource => dataSource
+.Ajax()
+.Read(read => read.Action("GetApprovalManifests", "Manifest"))
+.PageSize(20)
+.Sort(sort=>sort.Add(v=>v.ExpectedToArriveDate).Descending())
+))
+                </div>
+            </div>
+        </div>
+    </div>
+    <script id="template" type="text/kendo-tmpl">
+        @(Html.Kendo().TabStrip()
+                                                .Name("tabStrip_#=VoyageDetailsId#")
+                                                .SelectedIndex(0)
+                                                .Animation(animation => animation.Open(open => open.Fade(FadeDirection.In)))
+                                                .Items(items =>
+                                                {
+                                                    items.Add().Text("Voyage Information").Content(
+                                "<div class='voyage-details row' style='width:100%;'>" +
+                                "<div class='col-lg-3'>" +
+                                "<ul>" +
+                                "<li><label>Vessel Name : </label> #= VesselName #</li>" +
+                                "<li><label>Voyage No : </label> #= AgentVoyageNumber #</li>" +
+                                "<li><label>Instalment No: </label> #= NumberOfInstalment #</li>" +
+                                "<li><label>Port Code : </label> #= PortCodeOfDischarge #</li>" +
+                                "</ul>" +
+                                "</div>" +
+                                "<div class='col-lg-3'>" +
+                                "<ul>" +
+                                "<li><label>Line Code : </label> #= LineCode #</li>" +
+                                "<li><label>Agent Code : </label> #= VoyageAgentCode #</li>" +
+                                "<li><label>Upload Date : </label> #=kendo.toString(UploadDate,'MM/dd/yyyy')#</li>" +
+                                "<li><label>File Name : </label> #= FileName #</li>" +
+                                "</ul>" +
+                                "</div>" +
+                                "<div class='col-lg-3'>" +
+                                "<ul>" +
+                                "<li><label>Status : </label> #= Status.StatusDesc #</li>" +
+                                "</ul>" +
+                                "</div>" +
+                                "</div>"
+                                );
+                               }).ToClientTemplate())
+    </script>
+
+    <script>
+
+         function ViewManifest(e) {
+            var dataItem = this.dataItem($(e.currentTarget).closest("tr"));
+        window.location = '@Url.Action("ManifestView","Manifest")?voyageDetailsId=' + dataItem.VoyageDetailsId;
+            
+        }
+
+    </script>
+</div>
+

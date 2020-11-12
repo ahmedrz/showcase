@@ -1,0 +1,54 @@
+﻿<telerik:RadWindow
+    xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"
+    x:Class="EmanifestDownloader.winDownloadVoyage"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+     xmlns:telerikControls="clr-namespace:Telerik.Windows.Controls;assembly=Telerik.Windows.Controls"
+                   telerikControls:StyleManager.Theme="Expression_Dark"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    Header="Download Voyage"
+    Loaded="RadWindow_Loaded"
+        mc:Ignorable="d" 
+    Background="{DynamicResource WindowBackground}"                   
+                Foreground="{DynamicResource ControlForeground_Normal}" Height="350" Width="600" WindowStartupLocation="CenterScreen" WindowState="Maximized">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="100"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="35"/>
+            <RowDefinition Height="45"/>
+        </Grid.RowDefinitions>
+        <telerik:Label Width="62" Margin="8,10,0,0" Content="Line :" HorizontalAlignment="Left"  VerticalAlignment="Top" Height="23"/>
+        <telerik:RadComboBox AllowMultipleSelection="True" ClearSelectionButtonVisibility="Visible" ClearSelectionButtonContent="Clear" x:Name="cmbLines" Margin="70,11,0,0" HorizontalAlignment="Left"  VerticalAlignment="Top" Width="163"></telerik:RadComboBox>
+
+        <telerik:Label Width="62" Margin="8,37,0,0" Content="Dep. :" HorizontalAlignment="Left"  VerticalAlignment="Top" Height="23"/>
+        <telerik:RadComboBox SelectedValuePath="Id" DisplayMemberPath="Text" ClearSelectionButtonVisibility="Visible" ClearSelectionButtonContent="Clear" x:Name="cmbDeps" Margin="70,38,0,0" HorizontalAlignment="Left"  VerticalAlignment="Top" Width="163"></telerik:RadComboBox>
+
+        <telerik:RadButton x:Name="btnchoose" Content="Choose" Width="60" Height="30" Margin="70,65,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Click="btnchoose_Click"></telerik:RadButton>
+        <telerik:RadGridView Margin="5,0" Grid.Row="1" x:Name="bolGrid" 
+                             IsReadOnly="True"
+                             CanUserInsertRows="False"
+                             AutoGenerateColumns="False"
+                             CanUserDeleteRows="False"
+                             ShowGroupPanel="False"
+                             ItemsSource="{Binding Path=BolDetails}">
+            <telerik:RadGridView.Columns>
+                <telerik:GridViewDataColumn Header="BillOfLadingNumber" DataMemberBinding="{Binding BillOfLadingNumber}"/>
+                <telerik:GridViewDataColumn Header="Line" DataMemberBinding="{Binding BoxPartneringLineCode}"/>
+                <telerik:GridViewDataColumn Header="ConsigneeName" DataMemberBinding="{Binding ConsigneeName}"/>
+                <telerik:GridViewComboBoxColumn Header="Dep." 
+                    DataMemberBinding="{Binding DepartmentId, Mode=TwoWay}" 
+                    UniqueName="depColumn"  
+                    SelectedValueMemberPath="DepartmentId" 
+                    DisplayMemberPath="DepartmentName" />
+            </telerik:RadGridView.Columns>
+        </telerik:RadGridView>
+        <telerik:RadDataPager Margin="5,0,5,0" x:Name="radDataPager" Grid.Row="2"
+                              VerticalAlignment="Top"
+                          Source="{Binding Items, ElementName=voyagesGrid}" 
+                          PageSize="100" />
+        <telerik:RadButton x:Name="btnSave" Content="Save" Width="60" Margin="8,0,0,10" HorizontalAlignment="Left" Grid.Row="3" Height="30" VerticalAlignment="Bottom" Click="btnSave_Click"/>
+        <telerik:RadButton x:Name="btnCancel" Content="Cancel" Width="60" Margin="73,0,0,10" HorizontalAlignment="Left" Grid.Row="3" Height="30" VerticalAlignment="Bottom" Click="btnCancel_Click"/>
+    </Grid>
+</telerik:RadWindow>

@@ -1,0 +1,129 @@
+﻿@model EManifestServices.DAL.VoyageDetails
+
+<div class="row">
+    <div class="col-xl-12 col-lg-12 mb-4">
+        <div class="card card-shadow">
+            <div class="card-header">
+                <div class="card-title">
+                    <h4>Voyage Details</h4>
+                </div>
+            </div>
+            <div class="card-body">
+                @using (Html.BeginForm("ManifestView", "Manifest", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                {
+                    @Html.HiddenFor(m => m.VoyageDetailsId)
+                    @Html.AntiForgeryToken()
+                    <div class="row">
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label for="linecode" class="text-muted">Line </label>
+                                @Html.TextBoxFor(m => m.LineCode, new { @class = "form-control", @readonly = true })
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label for="agent" class="text-muted">Voyage Agent</label>
+                                @Html.TextBoxFor(m => m.VoyageAgentCode, new { @class = "form-control", @readonly = true })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label for="vesselname" class="text-muted">Vessel Name </label>
+                                @Html.TextBoxFor(m => m.VesselName, new { @class = "form-control", @readonly = true })
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label for="AgentVoyageNumber" class="text-muted">Voyage Number</label>
+                                @Html.TextBoxFor(m => m.AgentVoyageNumber, new { @class = "form-control", @readonly = true })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label for="PortCodeOfDischarge" class="text-muted">Discharge Port </label>
+                                @Html.TextBoxFor(m => m.PortCodeOfDischarge, new { @class = "form-control", @readonly = true })
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label for="ExpectedToArriveDate" class="text-muted">Expected Arrival</label>
+                                @Html.TextBoxFor(m => m.ExpectedToArriveDate, new { @class = "form-control", @readonly = true })
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label for="NumberOfInstalment" class="text-muted">Instalement Number </label>
+                                @Html.TextBoxFor(m => m.NumberOfInstalment, new { @class = "form-control", @readonly = true })
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label for="ManifestType" class="text-muted">Manifest Type</label>
+                                @Html.TextBoxFor(m => m.ManifestType, new { @class = "form-control", @readonly = true })
+                            </div>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-success btn-flat m-b-30 m-t-30">
+                        Approve
+                    </button>
+                    @Html.Kendo().Button().HtmlAttributes(new { type = "button", @class = "k-primary" }).Name("openDialogBtn").Content("Decline").Events(ev => ev.Click("openDialog"))
+
+                    @Html.ActionLink("Report", "ManifestReport", new { voyageDetailsId=Model.VoyageDetailsId}, new { @class = "k-primary k-button",@style="margin-left:5px;" })
+                }
+            </div>
+        </div>
+    </div>
+    @(Html.Kendo().Dialog()
+                                        .Name("dialog")
+                                        .Visible(false)
+                                        .Title("Decline Voyage")
+                                        .Content(@"<div class='col-10'>
+                    <div class='form-group'>
+                        <label for='PortCodeOfDischarge' class='text-muted'>Decline Reason</label>" +
+                                                Html.TextArea("txtdecline", null, new { @class = "form-control", placeholder = "Enter Decline Reason" }).ToHtmlString() +
+                                            @"</div>
+                </div>")
+                                        .Width(400)
+                                        .Modal(true)
+                                        .Actions(actions =>
+                                        {
+                                            actions.Add().Text("OK").Primary(true).Action("onOK");
+                                        })
+
+            //.Events(ev => ev.Close("onClose").Open("onOpen"))
+    )
+</div>
+<script>
+
+    function openDialog(e) {
+        $("#dialog").data("kendoDialog").open();
+    }
+    function onOK(e) {
+        var reason = $('#txtdecline').val();
+            $.ajax({
+                url: '@Url.Action("DeclineVoyage")?voyageDetailsId=@Model.VoyageDetailsId&declineReason='+reason,
+                    contentType: "application/json; charset=utf-8",
+                    success: function (data) {
+                        if (data.Success === true) {
+                            window.location = '@Url.Action("ManifestApproval", "Manifest")';
+                        }
+                        else {
+                           // alert(data.Message);
+                            addAlert(data.Message, false);
+                        }
+
+                    },
+                    error: function (req, status, errorObj) {
+                        addAlert(errorObj, false);
+                        //alert(errorObj);
+                    }
+                });
+    }
+</script>

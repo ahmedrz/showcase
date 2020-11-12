@@ -1,0 +1,80 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Authentication</title>
+    <link rel="shortcut icon" type="image/x-icon" href="~/assets/raiya_logo_small_PWs_icon.ico">
+
+    <link href="~/Styles/Kendo/kendo.common-material.min.css" rel="stylesheet" />
+    <link href="~/Styles/Kendo/kendo.mobile.all.min.css" rel="stylesheet" />
+    <link href="~/Styles/Kendo/kendo.material.min.css" rel="stylesheet" />
+
+
+    <!-- google font -->
+    <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700" rel="stylesheet" type="text/css">
+    <link href="~/assets/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+    <link href="~/assets/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="~/assets/css/ionicons.css" rel="stylesheet" type="text/css">
+    @*<link href="~/assets/css/simple-line-icons.css" rel="stylesheet" type="text/css">*@
+    <link href="~/assets/css/jquery.mCustomScrollbar.css" rel="stylesheet">
+    <link href="~/assets/css/style.css" rel="stylesheet">
+    <link href="~/assets/css/responsive.css" rel="stylesheet">
+
+    <script src="~/Scripts/Kendo/jquery.min.js"></script>
+    <script src="~/Scripts/Kendo/jszip.min.js"></script>
+    <script src="~/Scripts/Kendo/kendo.all.min.js"></script>
+    <script src="~/Scripts/Kendo/kendo.aspnetmvc.min.js"></script>
+    <script src="@Url.Content("~/Scripts/kendo.modernizr.custom.js")"></script>
+</head>
+
+<body class="bg_darck">
+    <div class="sufee-login d-flex align-content-center flex-wrap">
+        <div class="container">
+            <div class="login-content">
+                <div class="logo">
+                    <a href="#">
+                        <span class="logo-default">
+                            <img alt="" src="~/assets/images/raiya_logo_medium.png">
+                        </span>
+                    </a>
+                </div>
+                <div class="login-form">
+                    @if (TempData["Error"] != null)
+                    {
+                        <div class="alert alert-danger">
+                            <strong>Alert ! </strong>@TempData["Error"].ToString()
+                        </div>
+
+                    }
+                    @if (TempData["Success"] != null)
+                    {
+                        <div class="alert alert-success">
+                            <strong>Alert ! </strong>@TempData["Success"].ToString()
+                        </div>
+
+                    }
+                    @RenderBody()
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    @*<script type="text/javascript" src="~/assets/js/jquery.min.js"></script>*@
+    <script type="text/javascript" src="~/assets/js/popper.min.js"></script>
+    <script type="text/javascript" src="~/assets/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="~/assets/js/jquery.dcjqaccordion.2.7.js"></script>
+    @*<script src="~/assets/js/custom.js" type="text/javascript"></script>*@
+
+
+
+</body>
+</html>

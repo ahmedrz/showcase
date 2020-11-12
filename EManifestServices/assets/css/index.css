@@ -1,0 +1,90 @@
+.home_counter {
+	background:#f4f4f4;
+	line-height: 60px;
+	display: block;
+	padding: 25px 15px;
+	-webkit-border-radius: 4px 0px 0px 4px;
+	border-radius: 4px 0px 0px 4px !important;
+	height: auto;
+	width: auto;
+}
+.counter {
+	margin: 0;
+	padding: 0;
+	color: #c6cad6;
+	line-height: 1px;
+	font-size:27px;
+	color: #212229;
+}
+.color_gray{
+	color: #494c57;
+}
+#sparkline_2{
+	height:60px;
+}
+
+.text_country h2{
+    font-weight: normal;
+    text-transform: uppercase;
+    font-size: 15px;
+    margin-bottom: 10px;
+}
+.text_country h2 img{
+	margin-right: 10px;
+}
+.text_country h2 span{
+	float: right;
+}
+.height_wrap{
+	height: 260px;
+}
+
+
+
+
+/* Recent Sales */
+.users-list .list_membler{
+	display: inline-block;
+	width: 32px;
+	    position: relative;
+    white-space: nowrap;
+    border-radius: 1000px;
+    vertical-align: bottom;
+}
+.users-list li+li {
+    margin-left: -14px;
+}
+.users-list li .badge {
+background: rgba(255,255,255,.8) !important;
+    color: #53505f;
+    margin-bottom: 6px;
+    font-weight: normal;
+}
+.users-list li img {
+    border: 2px solid #FFF;
+    -webkit-box-shadow: 0 2px 10px 0 rgba(107,111,130,.3);
+    box-shadow: 0 2px 10px 0 rgba(107,111,130,.3);
+        width: 100%;
+    max-width: 100%;
+    height: auto;
+    border-radius: 1000px;
+}
+.pull-up {
+    -webkit-transition: all .25s ease;
+    -o-transition: all .25s ease;
+    -moz-transition: all .25s ease;
+    transition: all .25s ease;
+}
+.pull-up:hover {
+    -webkit-transform: translateY(-4px) scale(1.02);
+    -moz-transform: translateY(-4px) scale(1.02);
+    -ms-transform: translateY(-4px) scale(1.02);
+    -o-transform: translateY(-4px) scale(1.02);
+    transform: translateY(-4px) scale(1.02);
+    -webkit-box-shadow: 0 14px 24px rgba(62,57,107,.2);
+    box-shadow: 0 14px 24px rgba(62,57,107,.2);
+    z-index: 999;
+}
+.widthfull{
+	width: 100%;
+}

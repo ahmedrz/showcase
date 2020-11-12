@@ -1,0 +1,80 @@
+﻿@model EManifestServices.Models.ApiClientModel
+
+@{
+    ViewBag.Title = "ClientData";
+}
+<div class="card card-shadow mb-4">
+    <div class="card-header">
+        <div class="card-title">
+            Api Client data
+        </div>
+    </div>
+    <div class="card-body">
+        @using (Html.BeginForm("ClientData", "Account", FormMethod.Post, new { id = "ClientDataFrom", enctype = "multipart/form-data" }))
+        {
+            @Html.HiddenFor(m => m.ApiClientId)
+            if (!Html.ValidationSummary().ToString().Contains("display:none"))
+            {
+                <div class="alert alert-danger">
+                    <strong>Alert ! </strong> @Html.ValidationSummary()
+                </div>
+            }
+            @Html.AntiForgeryToken()
+            <div class="form-group">
+                <label for="ClientName" class="text-muted">Username</label>
+                @Html.TextBoxFor(m => m.ApiClientName, new { @placeholder = "Enter ApiClient Name", required = "required", validationmessage = "Enter {0}", @class = "form-control" })
+            </div>
+            <div class="form-group">
+                <label for="Password" class="text-muted">Password</label>
+                @Html.PasswordFor(m => m.ApiClientPassword, new { @placeholder = "Password", @class = "form-control" })
+            </div>
+            <div class="form-group">
+                <label for="ClientRole" class="text-muted">Role</label>
+                @(Html.Kendo().AutoCompleteFor(m => m.Role)
+                           .Filter("startswith")
+                           .Placeholder("Select Role...")
+                           .HtmlAttributes(new { required = "required", @class = "form-control" })
+                           .BindTo(new string[] { "Admin", "IQManClient", "PortClient" })
+                           .Separator(", "))
+            </div>
+            <div class="form-group">
+                <label for="CarrierId" class="text-muted">Carrier</label>
+                @(Html.Kendo().ComboBoxFor(m => m.CarrierId)
+                  .Filter("contains")
+                 .DataTextField("CarrierName")
+                  .DataValueField("CarrierId")
+                  .HtmlAttributes(new { @class = "form-control" })
+                  .Placeholder("Select carrier...")
+                  .DataSource(source =>
+                  {
+                      source.Read(read =>
+                      {
+                          read.Action("GetCarriersCombo", "Account");
+                      })
+                      .ServerFiltering(false);
+                  })
+                )
+            </div>
+            <div class="form-group checkbox">
+                <label class='custom-control custom-checkbox'>
+                    @Html.CheckBoxFor(m => m.IsActive, new { @class = "custom-control-input" })
+                    <span class='custom-control-indicator'></span>
+                    <span class='custom-control-description'>Active</span>
+                </label>
+            </div>
+            <button type="submit" class="btn btn-success btn-flat m-b-30 m-t-30">
+                Save
+            </button>
+        }
+
+    </div>
+</div>
+
+<script>
+    $(function () {
+        var validator = $("#ClientDataFrom").kendoValidator().data("kendoValidator");
+
+    });
+</script>
+
+

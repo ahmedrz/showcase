@@ -1,0 +1,98 @@
+﻿@model EManifestServices.Models.ApproveRequestModel
+
+@{
+    ViewBag.Title = "RequestData";
+}
+<div class="card card-shadow mb-4">
+    <div class="card-header">
+        <div class="card-title">
+            Request data
+        </div>
+    </div>
+    <div class="card-body">
+        @using (Html.BeginForm("RequestData", "Account", FormMethod.Post, new { id = "RequestDataFrom", enctype = "multipart/form-data" }))
+        {
+            @Html.HiddenFor(m => m.RequestId)
+            if (!Html.ValidationSummary().ToString().Contains("display:none"))
+            {
+                <div class="alert alert-danger">
+                    <strong>Alert ! </strong> @Html.ValidationSummary()
+                </div>
+            }
+            @Html.AntiForgeryToken()
+            <div class="form-group">
+                <label for="RequestDate" class="text-muted">Request Date</label>
+                @(Html.Kendo().DatePickerFor(m => m.RequestDate)
+                                .Format("yyyy-MM-dd")
+                               .HtmlAttributes(new { @class = "form-control" }))
+            </div>
+            <div class="form-group">
+                <label for="CompanyName" class="text-muted">Carrier name</label>
+                @Html.TextBoxFor(m => m.CompanyName, new { @placeholder = "Enter company name", required = "required", validationmessage = "Enter {0}", @class = "form-control" })
+            </div>
+            <div class="form-group">
+                <label for="Email" class="text-muted">Email address</label>
+                @Html.TextBoxFor(m => m.Email, new { @placeholder = "Enter email", required = "required", validationmessage = "Enter {0}", type = "email", data_email_msg = "Email format is not valid", @class = "form-control" })
+            </div>
+            <div class="form-group">
+                <label for="PhoneNo" class="text-muted">Phone</label>
+                @Html.TextBoxFor(m => m.PhoneNo, new { @placeholder = "Enter phone", pattern = "\\d{10,15}", required = "required", type = "tel", validationmessage = "Enter at least ten digits", @class = "form-control" })
+            </div>
+            <div class="form-group">
+                <label for="CompanyInfo" class="text-muted">Info</label>
+                @Html.TextAreaFor(m => m.CompanyInfo, new { @placeholder = "Enter info", @class = "form-control" })
+            </div>
+            <div class="form-group">
+                <label for="UserName" class="text-muted">Username</label>
+                @Html.TextBoxFor(m => m.UserName, new { @placeholder = "Enter info", @class = "form-control" })
+            </div>
+            <div class="form-group">
+                <label for="UserEmail" class="text-muted">User Email address</label>
+                @Html.TextBoxFor(m => m.UserEmail, new { @placeholder = "Enter User Email", required = "required", validationmessage = "Enter {0}", type = "email", data_email_msg = "Email format is not valid", @class = "form-control" })
+            </div>
+            <div class="form-group">
+                <label for="CarrierId" class="text-muted">Carrier</label>
+                @(Html.Kendo().ComboBoxFor(m => m.CarrierId)
+                 .Filter("contains")
+                .DataTextField("CarrierName")
+                 .DataValueField("CarrierId")
+                 .HtmlAttributes(new { @class = "form-control" })
+                 .Placeholder("Select carrier...")
+                 .DataSource(source =>
+                 {
+                     source.Read(read =>
+                     {
+                         read.Action("GetCarriersCombo", "Account");
+                     })
+                     .ServerFiltering(false);
+                 })
+                )
+            </div>
+
+            <div class="form-group checkbox">
+                <label class='custom-control custom-checkbox'>
+                    @Html.CheckBoxFor(m => m.Approved, new { @class = "custom-control-input", @disabled = true })
+                    <span class='custom-control-indicator'></span>
+                    <span class='custom-control-description'>Approved</span>
+                </label>
+            </div>
+            <button type="submit" @Html.Raw(!Model.Approved ? "" : "disabled='disabled'") class="btn btn-success btn-flat m-b-30 m-t-30">
+                Approve
+            </button>
+        }
+
+    </div>
+</div>
+
+<script>
+    $(function () {
+        var validator = $("#RequestDataFrom").kendoValidator().data("kendoValidator");
+
+    });
+    function onAdditionalData() {
+        return {
+            text: $("#CarrierId").val()
+        };
+    }
+</script>
+

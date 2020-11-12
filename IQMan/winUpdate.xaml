@@ -1,0 +1,26 @@
+﻿<Window x:Class="IQMan.winUpdate"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:IQMan"
+        xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"
+        mc:Ignorable="d"
+        Title="Update Info" Height="450" Width="350">
+    <Grid>
+        <Border Padding="10" Margin="0,0,0,55">
+            <StackPanel Orientation="Vertical" Margin="0" >
+                <CheckBox x:Name="chbVessels" Margin="10">Update Vessel Info</CheckBox>
+                <CheckBox x:Name="chbCountry" Margin="10">Update Country Codes</CheckBox>
+                <CheckBox x:Name="chbLocation" Margin="10">Update Location Codes</CheckBox>
+                <CheckBox x:Name="chbHSCodes" Margin="10">Update HSCodes</CheckBox>
+                <CheckBox x:Name="chbPackages" Margin="10">Update Package Codes</CheckBox>
+                <CheckBox x:Name="chbLines" Margin="10">Update Lines</CheckBox>
+                <CheckBox x:Name="chbContainerCodes" Margin="10">Update Container Iso Codes</CheckBox>
+                <CheckBox x:Name="chbUNHazardousCodes" Margin="10">Update UNHazardous Codes</CheckBox>
+            </StackPanel>
+        </Border>
+        <ProgressBar IsIndeterminate="True" Visibility="Hidden" x:Name="progress" Height="20" VerticalAlignment="Bottom" Margin="10,0,10,83"></ProgressBar>
+        <telerik:RadButton x:Name="btnDownload" Margin="20" Height="30" VerticalAlignment="Bottom" Click="btnDownload_Click">Download</telerik:RadButton>
+    </Grid>
+</Window>

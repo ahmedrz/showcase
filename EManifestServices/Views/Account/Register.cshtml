@@ -1,0 +1,68 @@
+﻿@using CaptchaMvc.HtmlHelpers
+@{
+    Layout = "~/Views/Shared/_AccountLayout2.cshtml";
+}
+@model EManifestServices.Models.RegisterModel
+@using (Html.BeginForm("Register", "Account", FormMethod.Post, new { id = "signupForm", enctype = "multipart/form-data" }))
+{
+    if (!Html.ValidationSummary().ToString().Contains("display:none"))
+    {
+        <div class="alert alert-danger">
+            <strong>Alert ! </strong> @Html.ValidationSummary()
+        </div>
+    }
+    @Html.AntiForgeryToken()
+    <div class="form-group">
+        <label for="signupInputEmail1" class="text-muted">Company name</label>
+        @Html.TextBoxFor(m => m.CompanyName, new { @placeholder = "Enter company name", required = "required", validationmessage = "Enter {0}", @class = "form-control" })
+    </div>
+    <div class="form-group">
+        <label for="signupInputEmail1" class="text-muted">Company Info</label>
+        @Html.TextAreaFor(m => m.CompanyInfo, new { @placeholder = "Enter company info", @class = "form-control" })
+    </div>
+    <div class="form-group">
+        <label for="signupInputEmail1" class="text-muted">Company Email address</label>
+        @Html.TextBoxFor(m => m.Email, new { @placeholder = "Enter email", required = "required", validationmessage = "Enter {0}", type = "email", data_email_msg = "Email format is not valid", @class = "form-control" })
+    </div>
+    <div class="form-group">
+        <label for="signupInputEmail1" class="text-muted">Phone</label>
+        @Html.TextBoxFor(m => m.PhoneNo, new { @placeholder = "Enter phone", pattern = "\\d{10,15}", required = "required", type = "tel", validationmessage = "Enter at least ten digits", @class = "form-control" })
+    </div>
+    <div class="form-group">
+        <label for="signupInputEmail1" class="text-muted">Username</label>
+        @Html.TextBoxFor(m => m.UserName, new { @placeholder = "Enter username", required = "required", validationmessage = "Enter {0}", @class = "form-control" })
+    </div>
+    <div class="form-group">
+        <label for="UserEmail" class="text-muted">User Email address</label>
+        @Html.TextBoxFor(m => m.UserEmail, new { @placeholder = "Enter user email", required = "required", validationmessage = "Enter {0}", type = "email", data_email_msg = "Email format is not valid", @class = "form-control" })
+    </div>
+    <div class="form-group">
+        <label for="signupInputPassword1" class="text-muted">Password</label>
+        @Html.PasswordFor(m => m.Password, new { @placeholder = "Password", required = "required",  @class = "form-control" })
+    </div>
+    <div class="form-group">
+        <label for="signupInputPassword1" class="text-muted">Captcha</label>
+        @Html.MathCaptcha()
+    </div>
+    <div class="checkbox">
+        <label>
+            <input type="checkbox">
+            Agree the terms and policy
+        </label>
+    </div>
+    <button type="submit" class="btn btn-success btn-flat m-b-30 m-t-30">
+        Register
+    </button>
+    <div class="register-link m-t-15 text-center">
+        <p>
+            Already have account ? <a href="@Url.Action("Login")"> Sign in</a>
+        </p>
+    </div>
+}
+<script>
+    $(function () {
+        var validator = $("#signupForm").kendoValidator().data("kendoValidator");
+
+    });
+
+</script>

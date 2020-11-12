@@ -1,0 +1,15 @@
+D:\Work\Alraiya\PortAuthority\EManifestServices\EmanifestParser\bin\Debug\EmanifestParser.dll.config
+D:\Work\Alraiya\PortAuthority\EManifestServices\EmanifestParser\bin\Debug\EmanifestParser.dll
+D:\Work\Alraiya\PortAuthority\EManifestServices\EmanifestParser\bin\Debug\EmanifestParser.pdb
+D:\Work\Alraiya\PortAuthority\EManifestServices\EmanifestParser\bin\Debug\Emanifest.Core.dll
+D:\Work\Alraiya\PortAuthority\EManifestServices\EmanifestParser\bin\Debug\EntityFramework.dll
+D:\Work\Alraiya\PortAuthority\EManifestServices\EmanifestParser\bin\Debug\EntityFramework.SqlServer.dll
+D:\Work\Alraiya\PortAuthority\EManifestServices\EmanifestParser\bin\Debug\Z.EntityFramework.Extensions.dll
+D:\Work\Alraiya\PortAuthority\EManifestServices\EmanifestParser\bin\Debug\Emanifest.Core.pdb
+D:\Work\Alraiya\PortAuthority\EManifestServices\EmanifestParser\bin\Debug\EntityFramework.xml
+D:\Work\Alraiya\PortAuthority\EManifestServices\EmanifestParser\bin\Debug\EntityFramework.SqlServer.xml
+D:\Work\Alraiya\PortAuthority\EManifestServices\EmanifestParser\obj\Debug\EmanifestParser.csprojAssemblyReference.cache
+D:\Work\Alraiya\PortAuthority\EManifestServices\EmanifestParser\obj\Debug\EmanifestParser.csproj.CoreCompileInputs.cache
+D:\Work\Alraiya\PortAuthority\EManifestServices\EmanifestParser\obj\Debug\EmanifestParser.csproj.CopyComplete
+D:\Work\Alraiya\PortAuthority\EManifestServices\EmanifestParser\obj\Debug\EmanifestParser.dll
+D:\Work\Alraiya\PortAuthority\EManifestServices\EmanifestParser\obj\Debug\EmanifestParser.pdb

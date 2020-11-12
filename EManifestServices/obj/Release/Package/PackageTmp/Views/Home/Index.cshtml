@@ -1,0 +1,58 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+
+<div class="card container-fluid placeholders">
+    <div class="row">
+        <div class="card card-shadow">
+            <div class="card-header">
+                <div class="card-title">
+                    <h2>Raiya Group E-Manifest Service Portal</h2>
+                </div>
+            </div>
+            <div class="card-body">
+                <p>
+                    Using this website vessel owners and carrier should provide a complete manifest of the content
+                    of the vessel 48 hours prior the the arrival of the vessel to the iraqi ports
+                    a manifest file creator software called IQMan can be used to create the manifest file you can download it from the link bellow .
+                </p>
+
+                <p>
+                    <a href="@Url.Action("Get", "Files", new { httproute = "DefaultApi", filename = "IQMan.zip" })" class='k-button textButton k-primary'>Download IQMan software</a>
+                    @*@Html.ActionLink("Download IQMan software", "GetSampleFile", "Manifest", null, new { @class = "k-button textButton k-primary" })*@
+
+                </p>
+                <p>
+                    user guide can be download bellow.
+                </p>
+                <p>
+
+                    <a href="@Url.Action("Get", "Files", new { httproute = "DefaultApi", filename = "Manifest Help.pdf" })" class='k-button textButton k-primary'>ENG user guide</a>
+
+                </p>
+                <p>
+                    arabic version of the guide can be download bellow.
+                </p>
+                <p>
+
+                    <a href="@Url.Action("Get", "Files", new { httproute = "DefaultApi", filename = "المنيفيست الالكتروني.pdf" })" class='k-button textButton k-primary'>AR user guide</a>
+
+                </p>
+                <p>
+                    the manifest file message format is structured the same as the manifest file that you use the upload
+                    manifest cargo information to Dubai ports so you can use the DPAMan software provided to you as a Voyage agent by Dubai trade
+                    to create the manifest file also but changing the port codes and relevent information provided to you by the Iraqi ports.
+                </p>
+
+                <p>
+                    also if you are using your own software to create the manifest file you will find the technical guidelines and the technical structure of the message in the bellow file provided by Dubai ports .
+                </p>
+                <p>
+                    <a href="@Url.Action("Get", "Files", new { httproute = "DefaultApi", filename = "manifest_file_format.pdf" })" class='k-button textButton k-primary'>Download technical message structure</a>
+                    @*@Html.ActionLink("Download technical message structure", "GetTechnicalFile", "Manifest", null, new { @class = "k-button textButton k-primary" })*@
+
+                </p>
+            </div>
+        </div>
+    </div>
+</div>

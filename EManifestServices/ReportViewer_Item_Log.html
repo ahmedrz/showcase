@@ -1,0 +1,860 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>Adding Telerik HTML5 Report Viewer page log</title>
+    <style>
+        body {
+            background: #fff;
+            color: #505050;
+            font: 14px 'Segoe UI', tahoma, arial, helvetica, sans-serif;
+            margin: 20px;
+            padding: 0;
+        }
+
+        #header {
+            background: #efefef;
+            padding: 0;
+        }
+
+        /* Start: Toggle details */
+        label { 
+            top:0; 
+            left:0; 
+            font-weight:700; 
+            margin-top: 10px;
+            user-select: none;
+            -ms-user-select: none;
+        }
+
+            label:hover{
+                color: cadetblue;
+                border-color: #505050;
+            }
+
+        input#show, input#hide {
+            display:none;
+        }
+
+        ul#details {
+            transition: opacity 1s ease-out;
+            opacity: 0; 
+            height: 0;
+            font-size: 0;
+            overflow: hidden;
+        }
+
+        input#show:checked ~ .show:before {
+            content: "";
+        }
+
+        input#show:checked ~ .hide:before {
+            content: "Hide details";
+            border: solid;
+            padding: 3px;
+        }
+
+        input#hide:checked ~ .hide:before {
+            content: "";
+        }
+
+        input#hide:checked ~ .show:before {
+            content: "Show details"; 
+            border: solid;
+            padding: 3px;
+        }
+
+        input#show:checked ~ ul#details {
+            opacity: 1;
+            font-size: 100%;
+            height: auto;
+            padding: 10px;
+        }
+
+        input#hide:checked ~ ul#details {
+            transition: opacity 1s ease-out;
+            opacity: 0; 
+            height: 0;
+            font-size: 0;
+            overflow: hidden;
+        }
+
+        /* End: toggle details */
+
+
+        h1 {
+            font-size: 48px;
+            font-weight: normal;
+            margin: 0;
+            padding: 0 30px;
+            line-height: 150px;
+        }
+
+        p {
+            font-size: 18px;
+            color: #fff;
+            background: #969696;
+            padding: 0 30px;
+            line-height: 50px;
+        }
+
+        #main {
+            padding: 5px 30px;
+        }
+
+        .section {
+            width: 21.7%;
+            float: left;
+            margin: 0 0 0 40px;
+        }
+
+            .section h2 {
+                font-size: 13px;
+                text-transform: uppercase;
+                margin: 0;
+                border-bottom: 1px solid silver;
+                padding-bottom: 12px;
+                margin-bottom: 8px;
+            }
+
+            .section.first {
+                margin-left: 0;
+                width: 25%
+            }
+
+                .section.first h2 {
+                    font-size: 20px;
+                    text-transform: none;
+                    margin-bottom: 16px;
+                    border: none;
+                }
+
+                .section.first li {
+                    border-top: 1px solid silver;
+                    padding: 8px 0;
+                }
+
+            .section.last {
+                margin-right: 0;
+                width: 70%;
+            }
+            
+            .section.last h2 {
+                    font-size: 20px;
+                    text-transform: none;
+                    margin-bottom: 5px;
+                    border: none;
+                }
+
+            .section.last li {
+                padding: 4px 0;
+                border-bottom: solid;
+                border-bottom-width: 1px;
+                border-color: lightgray;
+            }
+            
+            .section.last ul{
+                padding-bottom:10px;   
+                margin-bottom: 10px; 
+            }
+            
+                
+
+        ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            line-height: 20px;
+        }
+
+
+
+        a {
+            color: #267cb2;
+            text-decoration: none;
+        }
+
+            a:hover {
+                text-decoration: underline;
+            }
+
+
+    </style>
+</head>
+<body>
+
+    <div id="header">
+        <p><span style="color: red;">ERROR!</span> An error occurred while adding an HTML page with Telerik HTML5 Report Viewer</p>
+    </div>
+
+    <div id="main">
+        <div class="section first">
+            <h2>Telerik HTML5 MVC Report Viewer enabled application consists of: </h2>
+            <ul>
+                <li><a href="http://www.telerik.com/help/reporting/html5-report-viewer.html" >HTML5 Report Viewer</a> prerequisites</li>
+                <li>MVC page with HTML5 MVC Report Viewer</li>
+                <li><a href="http://www.telerik.com/help/reporting/telerik-reporting-rest-conception.html" >Telerik Reporting REST Service</a> with its prerequisites</li>
+            </ul>
+        </div>
+
+        <div class="section last">
+            <h2>Summary</h2>
+            <ul style="padding-bottom: 10px; padding-left: 7px;">
+                <li style="color: none;">Added folder: Reports</li>
+<li style="color: none;">Added SampleReport.trdp</li>
+<li style="color: none;">Reference added: Telerik.ReportViewer.Mvc</li>
+<li style="color: none;">Reference added: Telerik.Reporting</li>
+<li style="color: none;">Reference added: Telerik.Reporting.Services.WebApi</li>
+<li style="color: none;">Reference added: Telerik.Reporting.XpsRendering</li>
+<li style="color: none;">The referenced Newtonsoft.Json assembly version is newer. Added binding redirect.</li>
+<li style="color: none;">The referenced System.Net.Http assembly version is newer. Added binding redirect.</li>
+<li style="color: none;">Installed NuGet package: Microsoft.Net.Http 2.0.20710.0</li>
+<li style="color: #FF0000;">Error: System.InvalidOperationException: A problem occurred while trying to install the NuGet package Microsoft.Net.Http 2.0.20710.0.
+You can try to update your NuGet client or install the packages manually.
+ ---&gt; System.InvalidOperationException: An error occurred while retrieving package metadata for 'Microsoft.Net.Http.2.0.20710' from source 'http://packages.nuget.org'. ---&gt; NuGet.Protocol.Core.Types.FatalProtocolException: An error occurred while retrieving package metadata for 'Microsoft.Net.Http.2.0.20710' from source 'http://packages.nuget.org'. ---&gt; NuGet.Protocol.Core.Types.FatalProtocolException: Failed to fetch results from V2 feed at 'https://packages.nuget.org/FindPackagesById()?id='Microsoft.Net.Http'&amp;semVerLevel=2.0.0' with following message : Response status code does not indicate success: 404 (Not Found). ---&gt; System.Net.Http.HttpRequestException: Response status code does not indicate success: 404 (Not Found).
+   at System.Net.Http.HttpResponseMessage.EnsureSuccessStatusCode()
+   at NuGet.Protocol.HttpSource.&lt;&gt;c__DisplayClass14_0`1.&lt;&lt;GetAsync&gt;b__0&gt;d.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at NuGet.Common.ConcurrencyUtilities.&lt;ExecuteWithFileLockedAsync&gt;d__2`1.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at NuGet.Protocol.HttpSource.&lt;GetAsync&gt;d__14`1.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at NuGet.Protocol.V2FeedParser.&lt;LoadXmlAsync&gt;d__51.MoveNext()
+   --- End of inner exception stack trace ---
+   at NuGet.Protocol.V2FeedParser.&lt;LoadXmlAsync&gt;d__51.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at NuGet.Protocol.V2FeedParser.&lt;QueryV2FeedAsync&gt;d__49.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at NuGet.Protocol.V2FeedParser.&lt;FindPackagesByIdAsync&gt;d__38.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at NuGet.Protocol.V2FeedParser.&lt;GetPackage&gt;d__37.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at NuGet.Protocol.DependencyInfoResourceV2Feed.&lt;ResolvePackage&gt;d__4.MoveNext()
+   --- End of inner exception stack trace ---
+   at NuGet.Protocol.DependencyInfoResourceV2Feed.&lt;ResolvePackage&gt;d__4.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at NuGet.PackageManagement.ResolverGather.&lt;GatherPackageFromSourceAsync&gt;d__28.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.ValidateEnd(Task task)
+   at NuGet.PackageManagement.ResolverGather.&lt;GatherPackageAsync&gt;d__27.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at NuGet.PackageManagement.ResolverGather.&lt;&gt;c__DisplayClass26_1.&lt;&lt;StartWorkerTasks&gt;b__0&gt;d.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at NuGet.PackageManagement.ResolverGather.&lt;ProcessResultsAsync&gt;d__25.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at NuGet.PackageManagement.ResolverGather.&lt;StartTasksAndProcessWork&gt;d__22.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.ValidateEnd(Task task)
+   at NuGet.PackageManagement.ResolverGather.&lt;GatherAsync&gt;d__21.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at NuGet.PackageManagement.ResolverGather.&lt;GatherAsync&gt;d__20.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.ValidateEnd(Task task)
+   at NuGet.PackageManagement.NuGetPackageManager.&lt;PreviewInstallPackageAsync&gt;d__68.MoveNext()
+   --- End of inner exception stack trace ---
+   at NuGet.PackageManagement.NuGetPackageManager.&lt;PreviewInstallPackageAsync&gt;d__68.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at NuGet.PackageManagement.NuGetPackageManager.&lt;InstallPackageAsync&gt;d__48.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at NuGet.PackageManagement.NuGetPackageManager.&lt;InstallPackageAsync&gt;d__47.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at NuGet.VisualStudio.VsPackageInstaller.&lt;InstallInternalCoreAsync&gt;d__33.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at NuGet.VisualStudio.VsPackageInstaller.&lt;InstallInternalAsync&gt;d__32.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at NuGet.VisualStudio.VsPackageInstaller.&lt;InstallInternalAsync&gt;d__32.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at Microsoft.VisualStudio.Threading.JoinableTask.CompleteOnCurrentThread()
+   at NuGet.VisualStudio.VsPackageInstaller.RunJTFWithCorrectContext(Project project, Func`1 asyncTask)
+   at NuGet.VisualStudio.VsPackageInstaller.InstallPackage(String source, Project project, String packageId, String version, Boolean ignoreDependencies)
+   at Telerik.Reporting.Vs.Common.NugetManager.InstallPackage(String package, String version)
+   --- End of inner exception stack trace ---</li>
+<li style="color: none;">The referenced System.Net.Http.Formatting assembly version is newer. Added binding redirect.</li>
+<li style="color: none;">The referenced System.Web.Http assembly version is newer. Added binding redirect.</li>
+<li style="color: none;">The referenced System.Web.Http.WebHost assembly version is newer. Added binding redirect.</li>
+<li style="color: none;">Needs to modify the Global.asax: True</li>
+<li style="color: none;">Registered REST Report Service routes in Global.asax</li>
+<li style="color: none;">Added ManifestReport.cshtml</li>
+<li style="color: none;">Added Telerik namespaces to the D:\Work\Alraiya\PortAuthority\EManifestServices\EManifestServices\Views\Web.config file</li>
+<li style="color: none;">Added ReportsController.cs</li>
+<li style="color: none;">Added folder: ReportViewer</li>
+<li style="color: none;">Added folder: js</li>
+<li style="color: none;">Added telerikReportViewer-11.2.17.913.min.js</li>
+<li style="color: none;">Added telerikReportViewer.kendo-11.2.17.913.min.js</li>
+
+            </ul>
+
+            <input type="radio" id="show" name="group" />   
+            <input type="radio" id="hide" name="group" checked />
+            <label for="hide" class="hide" unselectable="on"></label>
+            <label for="show" class="show" unselectable="on"></label> 
+
+            <ul id="details">
+                10/06/2019 13:09:49
+<li style="color: none;">Build Started</li>
+<li style="color: none;">Check Framework Support</li>
+<li style="color: none;">Assembly name is null: False</li>
+<li style="color: none;">Assembly : Antlr3.Runtime</li>
+<li style="color: none;">Assembly Version: 3.5.0.2</li>
+<li style="color: none;">Product Version: 11.2.17.913</li>
+<li style="color: none;">Verify Telerik Reporting Version: True</li>
+<li style="color: none;">Assembly name is null: False</li>
+<li style="color: none;">Assembly : AutoMapper</li>
+<li style="color: none;">Assembly Version: 8.0.0.0</li>
+<li style="color: none;">Product Version: 11.2.17.913</li>
+<li style="color: none;">Verify Telerik Reporting Version: True</li>
+<li style="color: none;">Assembly name is null: False</li>
+<li style="color: none;">Assembly : CaptchaMvc</li>
+<li style="color: none;">Assembly Version: 2.5.0.0</li>
+<li style="color: none;">Product Version: 11.2.17.913</li>
+<li style="color: none;">Verify Telerik Reporting Version: True</li>
+<li style="color: none;">Assembly name is null: False</li>
+<li style="color: none;">Assembly : DotNetZip</li>
+<li style="color: none;">Assembly Version: 1.13.3.0</li>
+<li style="color: none;">Product Version: 11.2.17.913</li>
+<li style="color: none;">Verify Telerik Reporting Version: True</li>
+<li style="color: none;">Assembly name is null: False</li>
+<li style="color: none;">Assembly : EntityFramework</li>
+<li style="color: none;">Assembly Version: 6.0.0.0</li>
+<li style="color: none;">Product Version: 11.2.17.913</li>
+<li style="color: none;">Verify Telerik Reporting Version: True</li>
+<li style="color: none;">Assembly name is null: False</li>
+<li style="color: none;">Assembly : EntityFramework.SqlServer</li>
+<li style="color: none;">Assembly Version: 6.0.0.0</li>
+<li style="color: none;">Product Version: 11.2.17.913</li>
+<li style="color: none;">Verify Telerik Reporting Version: True</li>
+<li style="color: none;">Assembly name is null: False</li>
+<li style="color: none;">Assembly : ExcelDataReader</li>
+<li style="color: none;">Assembly Version: 3.5.0.0</li>
+<li style="color: none;">Product Version: 11.2.17.913</li>
+<li style="color: none;">Verify Telerik Reporting Version: True</li>
+<li style="color: none;">Assembly name is null: False</li>
+<li style="color: none;">Assembly : ExcelDataReader.DataSet</li>
+<li style="color: none;">Assembly Version: 3.5.0.0</li>
+<li style="color: none;">Product Version: 11.2.17.913</li>
+<li style="color: none;">Verify Telerik Reporting Version: True</li>
+<li style="color: none;">Assembly name is null: False</li>
+<li style="color: none;">Assembly : Hangfire.Core</li>
+<li style="color: none;">Assembly Version: 1.6.23.0</li>
+<li style="color: none;">Product Version: 11.2.17.913</li>
+<li style="color: none;">Verify Telerik Reporting Version: True</li>
+<li style="color: none;">Assembly name is null: False</li>
+<li style="color: none;">Assembly : Hangfire.SqlServer</li>
+<li style="color: none;">Assembly Version: 1.6.23.0</li>
+<li style="color: none;">Product Version: 11.2.17.913</li>
+<li style="color: none;">Verify Telerik Reporting Version: True</li>
+<li style="color: none;">Assembly name is null: False</li>
+<li style="color: none;">Assembly : Kendo.Mvc</li>
+<li style="color: none;">Assembly Version: </li>
+<li style="color: none;">Product Version: 11.2.17.913</li>
+<li style="color: none;">Verify Telerik Reporting Version: True</li>
+<li style="color: none;">Assembly name is null: False</li>
+<li style="color: none;">Assembly : Microsoft.AspNet.OData</li>
+<li style="color: none;">Assembly Version: 7.1.0.21120</li>
+<li style="color: none;">Product Version: 11.2.17.913</li>
+<li style="color: none;">Verify Telerik Reporting Version: True</li>
+<li style="color: none;">Assembly name is null: False</li>
+<li style="color: none;">Assembly : Microsoft.AspNet.SignalR.Core</li>
+<li style="color: none;">Assembly Version: 2.2.2.0</li>
+<li style="color: none;">Product Version: 11.2.17.913</li>
+<li style="color: none;">Verify Telerik Reporting Version: True</li>
+<li style="color: none;">Assembly name is null: False</li>
+<li style="color: none;">Assembly : Microsoft.AspNet.SignalR.SystemWeb</li>
+<li style="color: none;">Assembly Version: 2.2.2.0</li>
+<li style="color: none;">Product Version: 11.2.17.913</li>
+<li style="color: none;">Verify Telerik Reporting Version: True</li>
+<li style="color: none;">Assembly name is null: False</li>
+<li style="color: none;">Assembly : Microsoft.CSharp</li>
+<li style="color: none;">Assembly Version: </li>
+<li style="color: none;">Product Version: 11.2.17.913</li>
+<li style="color: none;">Verify Telerik Reporting Version: True</li>
+<li style="color: none;">Assembly name is null: False</li>
+<li style="color: none;">Assembly : Microsoft.Data.Edm</li>
+<li style="color: none;">Assembly Version: 5.6.0.0</li>
+<li style="color: none;">Product Version: 11.2.17.913</li>
+<li style="color: none;">Verify Telerik Reporting Version: True</li>
+<li style="color: none;">Assembly name is null: False</li>
+<li style="color: none;">Assembly : Microsoft.Data.OData</li>
+<li style="color: none;">Assembly Version: 5.6.0.0</li>
+<li style="color: none;">Product Version: 11.2.17.913</li>
+<li style="color: none;">Verify Telerik Reporting Version: True</li>
+<li style="color: none;">Assembly name is null: False</li>
+<li style="color: none;">Assembly : Microsoft.Extensions.DependencyInjection</li>
+<li style="color: none;">Assembly Version: 1.0.0.0</li>
+<li style="color: none;">Product Version: 11.2.17.913</li>
+<li style="color: none;">Verify Telerik Reporting Version: True</li>
+<li style="color: none;">Assembly name is null: False</li>
+<li style="color: none;">Assembly : Microsoft.Extensions.DependencyInjection.Abstractions</li>
+<li style="color: none;">Assembly Version: 1.0.0.0</li>
+<li style="color: none;">Product Version: 11.2.17.913</li>
+<li style="color: none;">Verify Telerik Reporting Version: True</li>
+<li style="color: none;">Assembly name is null: False</li>
+<li style="color: none;">Assembly : Microsoft.OData.Core</li>
+<li style="color: none;">Assembly Version: 7.5.0.20627</li>
+<li style="color: none;">Product Version: 11.2.17.913</li>
+<li style="color: none;">Verify Telerik Reporting Version: True</li>
+<li style="color: none;">Assembly name is null: False</li>
+<li style="color: none;">Assembly : Microsoft.OData.Edm</li>
+<li style="color: none;">Assembly Version: 7.5.0.20627</li>
+<li style="color: none;">Product Version: 11.2.17.913</li>
+<li style="color: none;">Verify Telerik Reporting Version: True</li>
+<li style="color: none;">Assembly name is null: False</li>
+<li style="color: none;">Assembly : Microsoft.Owin</li>
+<li style="color: none;">Assembly Version: 4.0.0.0</li>
+<li style="color: none;">Product Version: 11.2.17.913</li>
+<li style="color: none;">Verify Telerik Reporting Version: True</li>
+<li style="color: none;">Assembly name is null: False</li>
+<li style="color: none;">Assembly : Microsoft.Owin.Host.SystemWeb</li>
+<li style="color: none;">Assembly Version: 4.0.0.0</li>
+<li style="color: none;">Product Version: 11.2.17.913</li>
+<li style="color: none;">Verify Telerik Reporting Version: True</li>
+<li style="color: none;">Assembly name is null: False</li>
+<li style="color: none;">Assembly : Microsoft.Owin.Security</li>
+<li style="color: none;">Assembly Version: 4.0.0.0</li>
+<li style="color: none;">Product Version: 11.2.17.913</li>
+<li style="color: none;">Verify Telerik Reporting Version: True</li>
+<li style="color: none;">Assembly name is null: False</li>
+<li style="color: none;">Assembly : Microsoft.Spatial</li>
+<li style="color: none;">Assembly Version: 7.5.0.20627</li>
+<li style="color: none;">Product Version: 11.2.17.913</li>
+<li style="color: none;">Verify Telerik Reporting Version: True</li>
+<li style="color: none;">Assembly name is null: False</li>
+<li style="color: none;">Assembly : Microsoft.Web.Infrastructure</li>
+<li style="color: none;">Assembly Version: 1.0.0.0</li>
+<li style="color: none;">Product Version: 11.2.17.913</li>
+<li style="color: none;">Verify Telerik Reporting Version: True</li>
+<li style="color: none;">Assembly name is null: False</li>
+<li style="color: none;">Assembly : Newtonsoft.Json</li>
+<li style="color: none;">Assembly Version: 11.0.0.0</li>
+<li style="color: none;">Product Version: 11.2.17.913</li>
+<li style="color: none;">Verify Telerik Reporting Version: True</li>
+<li style="color: none;">Assembly name is null: False</li>
+<li style="color: none;">Assembly : Owin</li>
+<li style="color: none;">Assembly Version: 1.0.0.0</li>
+<li style="color: none;">Product Version: 11.2.17.913</li>
+<li style="color: none;">Verify Telerik Reporting Version: True</li>
+<li style="color: none;">Assembly name is null: False</li>
+<li style="color: none;">Assembly : System</li>
+<li style="color: none;">Assembly Version: </li>
+<li style="color: none;">Product Version: 11.2.17.913</li>
+<li style="color: none;">Verify Telerik Reporting Version: True</li>
+<li style="color: none;">Assembly name is null: False</li>
+<li style="color: none;">Assembly : System.Data</li>
+<li style="color: none;">Assembly Version: </li>
+<li style="color: none;">Product Version: 11.2.17.913</li>
+<li style="color: none;">Verify Telerik Reporting Version: True</li>
+<li style="color: none;">Assembly name is null: False</li>
+<li style="color: none;">Assembly : System.Drawing</li>
+<li style="color: none;">Assembly Version: </li>
+<li style="color: none;">Product Version: 11.2.17.913</li>
+<li style="color: none;">Verify Telerik Reporting Version: True</li>
+<li style="color: none;">Assembly name is null: False</li>
+<li style="color: none;">Assembly : System.IO.Compression</li>
+<li style="color: none;">Assembly Version: </li>
+<li style="color: none;">Product Version: 11.2.17.913</li>
+<li style="color: none;">Verify Telerik Reporting Version: True</li>
+<li style="color: none;">Assembly name is null: False</li>
+<li style="color: none;">Assembly : System.Net.Http</li>
+<li style="color: none;">Assembly Version: </li>
+<li style="color: none;">Product Version: 11.2.17.913</li>
+<li style="color: none;">Verify Telerik Reporting Version: True</li>
+<li style="color: none;">Assembly name is null: False</li>
+<li style="color: none;">Assembly : System.Net.Http.Formatting</li>
+<li style="color: none;">Assembly Version: 5.2.7.0</li>
+<li style="color: none;">Product Version: 11.2.17.913</li>
+<li style="color: none;">Verify Telerik Reporting Version: True</li>
+<li style="color: none;">Assembly name is null: False</li>
+<li style="color: none;">Assembly : System.Runtime.Serialization</li>
+<li style="color: none;">Assembly Version: </li>
+<li style="color: none;">Product Version: 11.2.17.913</li>
+<li style="color: none;">Verify Telerik Reporting Version: True</li>
+<li style="color: none;">Assembly name is null: False</li>
+<li style="color: none;">Assembly : System.Spatial</li>
+<li style="color: none;">Assembly Version: 5.6.0.0</li>
+<li style="color: none;">Product Version: 11.2.17.913</li>
+<li style="color: none;">Verify Telerik Reporting Version: True</li>
+<li style="color: none;">Assembly name is null: False</li>
+<li style="color: none;">Assembly : System.ValueTuple</li>
+<li style="color: none;">Assembly Version: 4.0.3.0</li>
+<li style="color: none;">Product Version: 11.2.17.913</li>
+<li style="color: none;">Verify Telerik Reporting Version: True</li>
+<li style="color: none;">Assembly name is null: False</li>
+<li style="color: none;">Assembly : System.Web.DynamicData</li>
+<li style="color: none;">Assembly Version: </li>
+<li style="color: none;">Product Version: 11.2.17.913</li>
+<li style="color: none;">Verify Telerik Reporting Version: True</li>
+<li style="color: none;">Assembly name is null: False</li>
+<li style="color: none;">Assembly : System.Web.Entity</li>
+<li style="color: none;">Assembly Version: </li>
+<li style="color: none;">Product Version: 11.2.17.913</li>
+<li style="color: none;">Verify Telerik Reporting Version: True</li>
+<li style="color: none;">Assembly name is null: False</li>
+<li style="color: none;">Assembly : System.Web.ApplicationServices</li>
+<li style="color: none;">Assembly Version: </li>
+<li style="color: none;">Product Version: 11.2.17.913</li>
+<li style="color: none;">Verify Telerik Reporting Version: True</li>
+<li style="color: none;">Assembly name is null: False</li>
+<li style="color: none;">Assembly : System.ComponentModel.DataAnnotations</li>
+<li style="color: none;">Assembly Version: </li>
+<li style="color: none;">Product Version: 11.2.17.913</li>
+<li style="color: none;">Verify Telerik Reporting Version: True</li>
+<li style="color: none;">Assembly name is null: False</li>
+<li style="color: none;">Assembly : System.Core</li>
+<li style="color: none;">Assembly Version: </li>
+<li style="color: none;">Product Version: 11.2.17.913</li>
+<li style="color: none;">Verify Telerik Reporting Version: True</li>
+<li style="color: none;">Assembly name is null: False</li>
+<li style="color: none;">Assembly : System.Data.DataSetExtensions</li>
+<li style="color: none;">Assembly Version: </li>
+<li style="color: none;">Product Version: 11.2.17.913</li>
+<li style="color: none;">Verify Telerik Reporting Version: True</li>
+<li style="color: none;">Assembly name is null: False</li>
+<li style="color: none;">Assembly : System.Web.Helpers</li>
+<li style="color: none;">Assembly Version: 3.0.0.0</li>
+<li style="color: none;">Product Version: 11.2.17.913</li>
+<li style="color: none;">Verify Telerik Reporting Version: True</li>
+<li style="color: none;">Assembly name is null: False</li>
+<li style="color: none;">Assembly : System.Web.Http</li>
+<li style="color: none;">Assembly Version: 5.2.7.0</li>
+<li style="color: none;">Product Version: 11.2.17.913</li>
+<li style="color: none;">Verify Telerik Reporting Version: True</li>
+<li style="color: none;">Assembly name is null: False</li>
+<li style="color: none;">Assembly : System.Web.Http.OData</li>
+<li style="color: none;">Assembly Version: 5.3.1.0</li>
+<li style="color: none;">Product Version: 11.2.17.913</li>
+<li style="color: none;">Verify Telerik Reporting Version: True</li>
+<li style="color: none;">Assembly name is null: False</li>
+<li style="color: none;">Assembly : System.Web.Http.WebHost</li>
+<li style="color: none;">Assembly Version: 5.2.7.0</li>
+<li style="color: none;">Product Version: 11.2.17.913</li>
+<li style="color: none;">Verify Telerik Reporting Version: True</li>
+<li style="color: none;">Assembly name is null: False</li>
+<li style="color: none;">Assembly : System.Web.Mvc</li>
+<li style="color: none;">Assembly Version: 5.2.6.0</li>
+<li style="color: none;">Product Version: 11.2.17.913</li>
+<li style="color: none;">Verify Telerik Reporting Version: True</li>
+<li style="color: none;">Assembly name is null: False</li>
+<li style="color: none;">Assembly : System.Web.Optimization</li>
+<li style="color: none;">Assembly Version: 1.1.0.0</li>
+<li style="color: none;">Product Version: 11.2.17.913</li>
+<li style="color: none;">Verify Telerik Reporting Version: True</li>
+<li style="color: none;">Assembly name is null: False</li>
+<li style="color: none;">Assembly : System.Web.Razor</li>
+<li style="color: none;">Assembly Version: 3.0.0.0</li>
+<li style="color: none;">Product Version: 11.2.17.913</li>
+<li style="color: none;">Verify Telerik Reporting Version: True</li>
+<li style="color: none;">Assembly name is null: False</li>
+<li style="color: none;">Assembly : System.Web.WebPages</li>
+<li style="color: none;">Assembly Version: 3.0.0.0</li>
+<li style="color: none;">Product Version: 11.2.17.913</li>
+<li style="color: none;">Verify Telerik Reporting Version: True</li>
+<li style="color: none;">Assembly name is null: False</li>
+<li style="color: none;">Assembly : System.Web.WebPages.Deployment</li>
+<li style="color: none;">Assembly Version: 3.0.0.0</li>
+<li style="color: none;">Product Version: 11.2.17.913</li>
+<li style="color: none;">Verify Telerik Reporting Version: True</li>
+<li style="color: none;">Assembly name is null: False</li>
+<li style="color: none;">Assembly : System.Web.WebPages.Razor</li>
+<li style="color: none;">Assembly Version: 3.0.0.0</li>
+<li style="color: none;">Product Version: 11.2.17.913</li>
+<li style="color: none;">Verify Telerik Reporting Version: True</li>
+<li style="color: none;">Assembly name is null: False</li>
+<li style="color: none;">Assembly : System.Xml.Linq</li>
+<li style="color: none;">Assembly Version: </li>
+<li style="color: none;">Product Version: 11.2.17.913</li>
+<li style="color: none;">Verify Telerik Reporting Version: True</li>
+<li style="color: none;">Assembly name is null: False</li>
+<li style="color: none;">Assembly : System.Web</li>
+<li style="color: none;">Assembly Version: </li>
+<li style="color: none;">Product Version: 11.2.17.913</li>
+<li style="color: none;">Verify Telerik Reporting Version: True</li>
+<li style="color: none;">Assembly name is null: False</li>
+<li style="color: none;">Assembly : System.Web.Extensions</li>
+<li style="color: none;">Assembly Version: </li>
+<li style="color: none;">Product Version: 11.2.17.913</li>
+<li style="color: none;">Verify Telerik Reporting Version: True</li>
+<li style="color: none;">Assembly name is null: False</li>
+<li style="color: none;">Assembly : System.Web.Abstractions</li>
+<li style="color: none;">Assembly Version: </li>
+<li style="color: none;">Product Version: 11.2.17.913</li>
+<li style="color: none;">Verify Telerik Reporting Version: True</li>
+<li style="color: none;">Assembly name is null: False</li>
+<li style="color: none;">Assembly : System.Web.Routing</li>
+<li style="color: none;">Assembly Version: </li>
+<li style="color: none;">Product Version: 11.2.17.913</li>
+<li style="color: none;">Verify Telerik Reporting Version: True</li>
+<li style="color: none;">Assembly name is null: False</li>
+<li style="color: none;">Assembly : System.Xml</li>
+<li style="color: none;">Assembly Version: </li>
+<li style="color: none;">Product Version: 11.2.17.913</li>
+<li style="color: none;">Verify Telerik Reporting Version: True</li>
+<li style="color: none;">Assembly name is null: False</li>
+<li style="color: none;">Assembly : System.Configuration</li>
+<li style="color: none;">Assembly Version: </li>
+<li style="color: none;">Product Version: 11.2.17.913</li>
+<li style="color: none;">Verify Telerik Reporting Version: True</li>
+<li style="color: none;">Assembly name is null: False</li>
+<li style="color: none;">Assembly : System.Web.Services</li>
+<li style="color: none;">Assembly Version: </li>
+<li style="color: none;">Product Version: 11.2.17.913</li>
+<li style="color: none;">Verify Telerik Reporting Version: True</li>
+<li style="color: none;">Assembly name is null: False</li>
+<li style="color: none;">Assembly : System.EnterpriseServices</li>
+<li style="color: none;">Assembly Version: </li>
+<li style="color: none;">Product Version: 11.2.17.913</li>
+<li style="color: none;">Verify Telerik Reporting Version: True</li>
+<li style="color: none;">Assembly name is null: False</li>
+<li style="color: none;">Assembly : WebGrease</li>
+<li style="color: none;">Assembly Version: 1.6.5135.21930</li>
+<li style="color: none;">Product Version: 11.2.17.913</li>
+<li style="color: none;">Verify Telerik Reporting Version: True</li>
+<li style="color: none;">Assembly name is null: False</li>
+<li style="color: none;">Assembly : Z.EntityFramework.Extensions</li>
+<li style="color: none;">Assembly Version: 3.13.13.0</li>
+<li style="color: none;">Product Version: 11.2.17.913</li>
+<li style="color: none;">Verify Telerik Reporting Version: True</li>
+<li style="color: none;">Build Completed</li>
+<li style="color: none;">This is a solution folder DataFiles</li>
+<li style="color: none;">Get project references.</li>
+<li style="color: none;">Get project references.</li>
+<li style="color: none;">Get project references.</li>
+<li style="color: none;">Get project references.</li>
+<li style="color: none;">Get project references.</li>
+<li style="color: none;">Can not get project DataFiles references.</li>
+<li style="color: none;">Get project references.</li>
+<li style="color: none;">Get project references.</li>
+<li style="color: none;">Get project references.</li>
+<li style="color: none;">Get project references.</li>
+<li style="color: none;">Get project references.</li>
+<li style="color: none;">Get project references.</li>
+<li style="color: none;">Get project references.</li>
+<li style="color: none;">Get project references.</li>
+<li style="color: none;">Get project references.</li>
+<li style="color: none;">Can not get project Miscellaneous Files references.</li>
+<li style="color: none;">Check project: EManifestServices.DAL</li>
+<li style="color: none;">Get project references.</li>
+<li style="color: none;">Check project: EmanifestParser</li>
+<li style="color: none;">Get project references.</li>
+<li style="color: none;">Check project: EmanifestDatabaseCreator</li>
+<li style="color: none;">Get project references.</li>
+<li style="color: none;">Check project: DataFiles</li>
+<li style="color: none;">Get project references.</li>
+<li style="color: none;">Can not get project DataFiles references.</li>
+<li style="color: none;">Check project: EmanifestDownloader</li>
+<li style="color: none;">Get project references.</li>
+<li style="color: none;">Check project: EManifestClient</li>
+<li style="color: none;">Get project references.</li>
+<li style="color: none;">Check project: IQMan</li>
+<li style="color: none;">Get project references.</li>
+<li style="color: none;">Check project: ODataCSharpClient</li>
+<li style="color: none;">Get project references.</li>
+<li style="color: none;">Check project: IQManClient.DAL</li>
+<li style="color: none;">Get project references.</li>
+<li style="color: none;">Check project: Emanifest.Core</li>
+<li style="color: none;">Get project references.</li>
+<li style="color: none;">Check project: PortSystem.DAL</li>
+<li style="color: none;">Get project references.</li>
+<li style="color: none;">Check project: PortSystem.Test</li>
+<li style="color: none;">Get project references.</li>
+<li style="color: none;">Check project: Miscellaneous Files</li>
+<li style="color: none;">Get project references.</li>
+<li style="color: none;">Can not get project Miscellaneous Files references.</li>
+<li style="color: none;">Added folder: Reports</li>
+<li style="color: none;">Added SampleReport.trdp</li>
+<li style="color: none;">Add project references</li>
+<li style="color: none;">Get project references.</li>
+<li style="color: none;">Reference added: Telerik.ReportViewer.Mvc</li>
+<li style="color: none;">Add service controller and API references: True</li>
+<li style="color: none;">Add required references.</li>
+<li style="color: none;">Add project references</li>
+<li style="color: none;">Get project references.</li>
+<li style="color: none;">Reference added: Telerik.Reporting</li>
+<li style="color: none;">Add project references</li>
+<li style="color: none;">Reference added: Telerik.Reporting.Services.WebApi</li>
+<li style="color: none;">Reference added: Telerik.Reporting.XpsRendering</li>
+<li style="color: none;">Verify Newtonsoft.Json package version</li>
+<li style="color: none;">Is Newtonsoft.Json reference version compatible. Current: 11.0.0.0 | Required 7.0.0.0</li>
+<li style="color: none;">The referenced Newtonsoft.Json assembly version is newer. Added binding redirect.</li>
+<li style="color: none;">Verify Microsoft.Net.Http package version</li>
+<li style="color: none;">Is System.Net.Http reference version compatible. Current: 4.0.0.0 | Required 2.0.0.0</li>
+<li style="color: none;">The referenced System.Net.Http assembly version is newer. Added binding redirect.</li>
+<li style="color: none;">Installed NuGet package: Microsoft.Net.Http 2.0.20710.0</li>
+<li style="color: #FF0000;">Error: System.InvalidOperationException: A problem occurred while trying to install the NuGet package Microsoft.Net.Http 2.0.20710.0.
+You can try to update your NuGet client or install the packages manually.
+ ---&gt; System.InvalidOperationException: An error occurred while retrieving package metadata for 'Microsoft.Net.Http.2.0.20710' from source 'http://packages.nuget.org'. ---&gt; NuGet.Protocol.Core.Types.FatalProtocolException: An error occurred while retrieving package metadata for 'Microsoft.Net.Http.2.0.20710' from source 'http://packages.nuget.org'. ---&gt; NuGet.Protocol.Core.Types.FatalProtocolException: Failed to fetch results from V2 feed at 'https://packages.nuget.org/FindPackagesById()?id='Microsoft.Net.Http'&amp;semVerLevel=2.0.0' with following message : Response status code does not indicate success: 404 (Not Found). ---&gt; System.Net.Http.HttpRequestException: Response status code does not indicate success: 404 (Not Found).
+   at System.Net.Http.HttpResponseMessage.EnsureSuccessStatusCode()
+   at NuGet.Protocol.HttpSource.&lt;&gt;c__DisplayClass14_0`1.&lt;&lt;GetAsync&gt;b__0&gt;d.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at NuGet.Common.ConcurrencyUtilities.&lt;ExecuteWithFileLockedAsync&gt;d__2`1.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at NuGet.Protocol.HttpSource.&lt;GetAsync&gt;d__14`1.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at NuGet.Protocol.V2FeedParser.&lt;LoadXmlAsync&gt;d__51.MoveNext()
+   --- End of inner exception stack trace ---
+   at NuGet.Protocol.V2FeedParser.&lt;LoadXmlAsync&gt;d__51.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at NuGet.Protocol.V2FeedParser.&lt;QueryV2FeedAsync&gt;d__49.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at NuGet.Protocol.V2FeedParser.&lt;FindPackagesByIdAsync&gt;d__38.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at NuGet.Protocol.V2FeedParser.&lt;GetPackage&gt;d__37.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at NuGet.Protocol.DependencyInfoResourceV2Feed.&lt;ResolvePackage&gt;d__4.MoveNext()
+   --- End of inner exception stack trace ---
+   at NuGet.Protocol.DependencyInfoResourceV2Feed.&lt;ResolvePackage&gt;d__4.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at NuGet.PackageManagement.ResolverGather.&lt;GatherPackageFromSourceAsync&gt;d__28.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.ValidateEnd(Task task)
+   at NuGet.PackageManagement.ResolverGather.&lt;GatherPackageAsync&gt;d__27.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at NuGet.PackageManagement.ResolverGather.&lt;&gt;c__DisplayClass26_1.&lt;&lt;StartWorkerTasks&gt;b__0&gt;d.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at NuGet.PackageManagement.ResolverGather.&lt;ProcessResultsAsync&gt;d__25.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at NuGet.PackageManagement.ResolverGather.&lt;StartTasksAndProcessWork&gt;d__22.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.ValidateEnd(Task task)
+   at NuGet.PackageManagement.ResolverGather.&lt;GatherAsync&gt;d__21.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at NuGet.PackageManagement.ResolverGather.&lt;GatherAsync&gt;d__20.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.ValidateEnd(Task task)
+   at NuGet.PackageManagement.NuGetPackageManager.&lt;PreviewInstallPackageAsync&gt;d__68.MoveNext()
+   --- End of inner exception stack trace ---
+   at NuGet.PackageManagement.NuGetPackageManager.&lt;PreviewInstallPackageAsync&gt;d__68.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at NuGet.PackageManagement.NuGetPackageManager.&lt;InstallPackageAsync&gt;d__48.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at NuGet.PackageManagement.NuGetPackageManager.&lt;InstallPackageAsync&gt;d__47.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at NuGet.VisualStudio.VsPackageInstaller.&lt;InstallInternalCoreAsync&gt;d__33.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at NuGet.VisualStudio.VsPackageInstaller.&lt;InstallInternalAsync&gt;d__32.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at NuGet.VisualStudio.VsPackageInstaller.&lt;InstallInternalAsync&gt;d__32.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at Microsoft.VisualStudio.Threading.JoinableTask.CompleteOnCurrentThread()
+   at NuGet.VisualStudio.VsPackageInstaller.RunJTFWithCorrectContext(Project project, Func`1 asyncTask)
+   at NuGet.VisualStudio.VsPackageInstaller.InstallPackage(String source, Project project, String packageId, String version, Boolean ignoreDependencies)
+   at Telerik.Reporting.Vs.Common.NugetManager.InstallPackage(String package, String version)
+   --- End of inner exception stack trace ---</li>
+<li style="color: none;">Verify Microsoft.AspNet.WebApi.Client package version</li>
+<li style="color: none;">Is System.Net.Http.Formatting reference version compatible. Current: 5.2.7.0 | Required 4.0.0.0</li>
+<li style="color: none;">The referenced System.Net.Http.Formatting assembly version is newer. Added binding redirect.</li>
+<li style="color: none;">Verify Microsoft.AspNet.WebApi.Core package version</li>
+<li style="color: none;">Is System.Web.Http reference version compatible. Current: 5.2.7.0 | Required 4.0.0.0</li>
+<li style="color: none;">The referenced System.Web.Http assembly version is newer. Added binding redirect.</li>
+<li style="color: none;">Verify Microsoft.Web.Infrastructure package version</li>
+<li style="color: none;">Is Microsoft.Web.Infrastructure reference version compatible. Current: 1.0.0.0 | Required 1.0.0.0</li>
+<li style="color: none;">Verify Microsoft.AspNet.WebApi.WebHost package version</li>
+<li style="color: none;">Is System.Web.Http.WebHost reference version compatible. Current: 5.2.7.0 | Required 4.0.0.0</li>
+<li style="color: none;">The referenced System.Web.Http.WebHost assembly version is newer. Added binding redirect.</li>
+<li style="color: none;">Needs to modify the Global.asax: True</li>
+<li style="color: none;">Enhance Global.asax</li>
+<li style="color: none;">Namespace Kind: vsCMElementNamespace</li>
+<li style="color: none;">Register routes</li>
+<li style="color: none;">Is REST Report Service route registered: False</li>
+<li style="color: none;">Registered REST Report Service routes in Global.asax</li>
+<li style="color: none;">Class with name ReportsController is not found</li>
+<li style="color: none;">Adding TelerikViewerPage.cshtml.Type project item</li>
+<li style="color: none;">Adding TelerikViewerPage.cshtml.Trdx project item</li>
+<li style="color: none;">Added ManifestReport.cshtml</li>
+<li style="color: none;">Adding TelerikViewerPage.cshtml.ReportServer project item</li>
+<li style="color: none;">Added Telerik namespaces to the D:\Work\Alraiya\PortAuthority\EManifestServices\EManifestServices\Views\Web.config file</li>
+<li style="color: none;">Folder Controllers already exists</li>
+<li style="color: none;">Added ReportsController.cs</li>
+<li style="color: none;">Added folder: ReportViewer</li>
+<li style="color: none;">Added folder: js</li>
+<li style="color: none;">Added telerikReportViewer-11.2.17.913.min.js</li>
+<li style="color: none;">Folder ReportViewer already exists</li>
+<li style="color: none;">Folder js already exists</li>
+<li style="color: none;">Added telerikReportViewer.kendo-11.2.17.913.min.js</li>
+
+            </ul>
+        </div>
+    </div>
+
+</body>
+</html>

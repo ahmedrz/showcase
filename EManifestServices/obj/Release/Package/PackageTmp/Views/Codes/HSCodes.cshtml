@@ -1,0 +1,116 @@
+﻿
+@{
+    ViewBag.Title = "HSCodes";
+}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-xl-12 col-lg-12 mb-4">
+            <div class="card card-shadow">
+                <div class="card-header">
+                    <div class="card-title">
+                        <h4>HS Codes</h4>
+                    </div>
+                </div>
+                <div class="card-body">
+                    @(Html.Kendo().Grid<EManifestServices.DAL.UNHSCodes>()
+                                .Name("Grid")
+                                 .Columns(columns =>
+                                 {
+                                     columns.Bound(p => p.Classification).Width(150);
+                                     columns.Bound(p => p.Code).Width(150);
+                                     columns.Bound(p => p.Description).Width(300);
+                                     columns.Bound(p => p.ParentCode).Width(150);
+                                     columns.Bound(p => p.Level).Width(150);
+                                     columns.Bound(p => p.IsLeaf).Width(150);
+                                     columns.Command(command => command.Destroy()).Width(150);
+                                 })
+                                 .HtmlAttributes(new { style = "height: 550px;" })
+                                .ToolBar(toolbar =>
+                                {
+                                    toolbar.Create();
+                                    toolbar.Save();
+                                })
+                                .Editable(editable => editable.Mode(GridEditMode.InCell))
+                                .Pageable()
+                                .Filterable()
+                                .Navigatable()
+                                .Scrollable()
+                                .DataSource(dataSource => dataSource
+                                 .Custom()
+                                 .Batch(false)
+                                 .Type("odata-v4")
+                                 .Schema(schema => schema
+                                     .Model(m =>
+                                     {
+                                         m.Id(t => t.UNHSCodeId);
+                                         m.Field(t => t.Classification);
+                                         m.Field(t => t.Code);
+                                         m.Field(t => t.Description);
+                                         m.Field(t => t.ParentCode);
+                                         m.Field(t => t.Level);
+                                         m.Field(t => t.IsLeaf);
+                                     }))
+                                 .Transport(t =>
+                                 {
+                                     t.Read(new { url = new Kendo.Mvc.ClientHandlerDescriptor() { HandlerName = "read" },
+                                         beforeSend = new Kendo.Mvc.ClientHandlerDescriptor()
+                                         {
+                                             HandlerName = "onBeforeSend"
+                                         }
+                                     });
+                                     t.Update(new { url = new Kendo.Mvc.ClientHandlerDescriptor() { HandlerName = "update" },
+                                         beforeSend = new Kendo.Mvc.ClientHandlerDescriptor()
+                                         {
+                                             HandlerName = "onBeforeSend"
+                                         }
+                                     });
+                                     t.Create(new { url = new Kendo.Mvc.ClientHandlerDescriptor() { HandlerName = "create" },
+                                         beforeSend = new Kendo.Mvc.ClientHandlerDescriptor()
+                                         {
+                                             HandlerName = "onBeforeSend"
+                                         }
+                                     });
+                                     t.Destroy(new { url = new Kendo.Mvc.ClientHandlerDescriptor() { HandlerName = "destroy" },
+                                         beforeSend = new Kendo.Mvc.ClientHandlerDescriptor()
+                                         {
+                                             HandlerName = "onBeforeSend"
+                                         }
+                                     });
+                                     //t.Batch(new { url = new Kendo.Mvc.ClientHandlerDescriptor() { HandlerName = "batch" } });
+                                 })
+                                .PageSize(20)
+                                .ServerPaging(true)
+                                .ServerFiltering(true)
+                                )
+                    )
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+    //function batch() {
+    //    return "http://localhost:18062/odata/$batch";
+    //}
+    function onBeforeSend(e) {
+        e.setRequestHeader("Authorization", '@ViewBag.Token');
+    }
+    function read() {
+        return "@Url.Content("~")odata/UNHSCodes";
+    }
+
+    function update(dataItem) {
+        return "@Url.Content("~")odata/UNHSCodes(" + dataItem.UNHSCodeId + ")";
+    }
+
+    function create(dataItem) {
+        //delete dataItem.CountryCode;
+        return "@Url.Content("~")odata/UNHSCodes";
+    }
+
+    function destroy(dataItem) {
+        return "@Url.Content("~")odata/UNHSCodes(" + dataItem.UNHSCodeId + ")";
+    }
+    </script>
+</div>
+

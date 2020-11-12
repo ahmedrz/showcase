@@ -1,0 +1,82 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+}
+
+<div class="row">
+    <div class="col-xl-12 col-12-6 mb-4">
+        <div class="card card-shadow">
+            <div class="card-header">
+                <div class="card-title">
+                    <h4>Vessels</h4>
+                </div>
+            </div>
+            <div class="card-body">
+                @(Html.ActionLink("Add new Vessel", "EditVessel", "Vessels", null, new { @class = "k-button textButton k-primary" }))
+                @(Html.Kendo().Grid<EManifestServices.Models.VesselModel>()
+                .Name("grid")
+.Columns(columns =>
+{
+            columns.Bound(c => c.VesselId).Hidden();
+            columns.Bound(c => c.VesselName).Title("Vessel Name").Width(200);
+            columns.Bound(c => c.VesselCountry).Title("Vessel Country").Width(200);
+            columns.Bound(c => c.GRT).Title("GRT").Width(200);
+            columns.Command(custom => custom.Custom("View").Click("ViewVessel")).Width(120);
+    columns.Command(custom => custom.Custom("Delete").Click("DeleteVessel")).Width(120);
+})
+.HtmlAttributes(new { style = "height: 550px;" })
+.Scrollable()
+.Filterable()
+.Sortable()
+.Resizable(resizable => resizable.Columns(true))
+.Pageable(pageable => pageable
+                    .Refresh(true)
+                    .PageSizes(true)
+                    .ButtonCount(5))
+.DataSource(dataSource => dataSource
+                    .Ajax()
+                    .Read(read => read.Action("GetVessels", "Vessels"))
+                    .PageSize(20)
+)
+)
+
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+
+
+    function ViewVessel(e) {
+       var dataItem = this.dataItem($(e.currentTarget).closest("tr"));
+        window.location = '@Url.Action("EditVessel","Vessels")/' + dataItem.VesselId;
+    }
+    function DeleteVessel(e) {
+        if (confirm('Are you sure you want to delete this vessel?')) {
+            var dataItem = this.dataItem($(e.currentTarget).closest("tr"));
+
+                $.ajax({
+                    url: '@Url.Action("DeleteVessel")/' + dataItem.VesselId,
+                    contentType: "application/json; charset=utf-8",
+                    success: function (data) {
+                        if (data.Success === true) {
+                            $('#grid').data('kendoGrid').dataSource.read();
+                            $('#grid').data('kendoGrid').refresh();
+                            addAlert('Vessel deleted.', true);
+                        }
+                        else {
+                           // alert(data.Message);
+                            addAlert(data.Message, false);
+                        }
+
+                    },
+                    error: function (req, status, errorObj) {
+                        addAlert(errorObj, false);
+                        //alert(errorObj);
+                    }
+                });
+            }
+        }
+
+</script>
+

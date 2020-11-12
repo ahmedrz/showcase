@@ -1,0 +1,228 @@
+﻿<Window x:Class="IQMan.winLCLContainers"
+        Loaded="Window_Loaded"
+                xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Closing="Window_Closing"
+                xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"
+                Title="LCL containers Emanifest Creator" Height="350" Width="1000" WindowState="Maximized" Icon="ship_i0I_icon.ico">
+    <Grid>
+        <Grid.Resources>
+            <Style x:Key="MenuItemContainerStyle" TargetType="telerik:RadMenuItem">
+                <Setter Property="Header" Value="{Binding Text}"/>
+                <Setter Property="ItemsSource" Value="{Binding SubItems}"/>
+                <Setter Property="IsEnabled" Value="{Binding IsEnabled}"/>
+            </Style>
+            <DataTemplate x:Key="ContainersRowDetailsTemplate">
+                <telerik:RadGridView Name="consignmentGrid"  
+                                      CanUserInsertRows="False"
+                             CanUserDeleteRows="False"
+                             CanUserGroupColumns="False"
+                            ShowGroupPanel="False"
+                             ShowGroupFooters="False"
+                             NewRowPosition="None"
+                                     Margin="10"                                    
+                        ItemsSource="{Binding ConsignmentDetails}"  
+                        AutoGenerateColumns="False">
+                    <telerik:RadContextMenu.ContextMenu>
+                        <telerik:RadContextMenu x:Name="consignmentMenu" 
+                                         ItemContainerStyle="{StaticResource MenuItemContainerStyle}"
+                                        Opened="GridConsignmentContextMenu_Opened"
+                                        ItemClick="consignmentMenu_ItemClick"/>
+                    </telerik:RadContextMenu.ContextMenu>
+                    <telerik:RadGridView.Columns>
+                        <telerik:GridViewDataColumn IsVisible="False" DataMemberBinding="{Binding ConsignmentDetailsId}"/>
+                        <telerik:GridViewDataColumn DataMemberBinding="{Binding MarksAndNumbers}"/>
+                        <telerik:GridViewDataColumn DataMemberBinding="{Binding CargoDescription}"/>
+                        <telerik:GridViewDataColumn DataMemberBinding="{Binding UsedOrNew}"/>
+                        <telerik:GridViewDataColumn DataMemberBinding="{Binding CommodityCode}"/>
+                        <telerik:GridViewDataColumn DataMemberBinding="{Binding ConsignmentPackages}"/>
+                        <telerik:GridViewDataColumn DataMemberBinding="{Binding PackageType}"/>
+                        <telerik:GridViewDataColumn DataMemberBinding="{Binding PackageTypeCode}"/>
+                        <telerik:GridViewDataColumn DataMemberBinding="{Binding NumberOfPallets}"/>
+                        <telerik:GridViewDataColumn DataMemberBinding="{Binding ConsignmentWeight}"/>
+                        <telerik:GridViewDataColumn DataMemberBinding="{Binding ConsignmentValume}"/>
+                        <telerik:GridViewDataColumn DataMemberBinding="{Binding DangerousGoodsIndicator}"/>
+                        <telerik:GridViewDataColumn DataMemberBinding="{Binding IMOClassNumber}"/>
+                        <telerik:GridViewDataColumn DataMemberBinding="{Binding UnNumberOfDangerousGoods}"/>
+                        <telerik:GridViewDataColumn DataMemberBinding="{Binding FlashPoint}"/>
+                        <telerik:GridViewDataColumn DataMemberBinding="{Binding UnitOfTemperatureForFlashPoint}"/>
+                        <telerik:GridViewDataColumn DataMemberBinding="{Binding StorageRequestedForDangerousGoods}"/>
+                        <telerik:GridViewDataColumn DataMemberBinding="{Binding RefrigerationRequired}"/>
+                        <telerik:GridViewDataColumn DataMemberBinding="{Binding MinimumTemperatureOfRefrigeration}"/>
+                        <telerik:GridViewDataColumn DataMemberBinding="{Binding MaximumTemperatureOfRefrigeration}"/>
+                        <telerik:GridViewDataColumn DataMemberBinding="{Binding UnitOfTemperatureForRegrigeration}"/>
+
+                    </telerik:RadGridView.Columns>
+                </telerik:RadGridView>
+            </DataTemplate>
+            <DataTemplate x:Key="RowDetailsTemplate">
+                <telerik:RadGridView Name="containersGrid" 
+                                     
+                                     Margin="10"
+                               RowDetailsVisibilityMode="VisibleWhenSelected"
+                               RowDetailsTemplate="{StaticResource ContainersRowDetailsTemplate}"
+                                CanUserInsertRows="False"
+                             CanUserDeleteRows="False"
+                             CanUserGroupColumns="False"
+                            ShowGroupPanel="False"
+                             ShowGroupFooters="False"
+                             NewRowPosition="None"
+                        ItemsSource="{Binding ContainerDetails}"  
+                        AutoGenerateColumns="False">
+                    <telerik:RadContextMenu.ContextMenu>
+                        <telerik:RadContextMenu x:Name="containerMenu" 
+                                         ItemContainerStyle="{StaticResource MenuItemContainerStyle}"
+                                        Opened="GridcontainerContextMenu_Opened"
+                                        ItemClick="containerMenu_ItemClick"/>
+                    </telerik:RadContextMenu.ContextMenu>
+                    <telerik:RadGridView.Columns>
+                        <telerik:GridViewDataColumn IsVisible="False" DataMemberBinding="{Binding ContainerDetailsId}"/>
+                        <telerik:GridViewDataColumn DataMemberBinding="{Binding ContainerNo}"/>
+                        <telerik:GridViewDataColumn DataMemberBinding="{Binding CheckDigit}"/>
+                        <telerik:GridViewDataColumn DataMemberBinding="{Binding ISOCode}"/>
+                        <telerik:GridViewDataColumn DataMemberBinding="{Binding TareWeight}"/>
+                        <telerik:GridViewDataColumn DataMemberBinding="{Binding SealNumber}"/>
+                        <telerik:GridViewDataColumn DataMemberBinding="{Binding ContainerOwnerType}"/>
+
+                    </telerik:RadGridView.Columns>
+                </telerik:RadGridView>
+
+            </DataTemplate>
+
+        </Grid.Resources>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="100"/>
+            <RowDefinition Height="71*"/>
+            <RowDefinition Height="35"/>
+            <RowDefinition Height="50"/>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0" Margin="3">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="1*"/>
+            </Grid.RowDefinitions>
+            <StackPanel Grid.Row="0" Orientation="Horizontal">
+                <telerik:Label Width="140" Margin="3" Content="Line :" HorizontalAlignment="Left"  VerticalAlignment="Top"/>
+                <telerik:RadAutoCompleteBox x:Name="cmbLine" DisplayMemberPath="Text" AutoCompleteMode="Suggest" TextSearchPath="Value" SelectionMode="Single" SearchText="{Binding Voyage.LineCode , Mode=TwoWay}"  Margin="3" HorizontalAlignment="Left"  VerticalAlignment="Top" Width="150" DropDownWidth="300"/>
+                <telerik:Label Width="140" Margin="3" Content="Voyage Agent :" HorizontalAlignment="Left"  VerticalAlignment="Top"/>
+                <TextBox Text="{Binding Voyage.VoyageAgentCode}"  MaxLength="30" Margin="3" HorizontalAlignment="Left"  VerticalAlignment="Top" Width="150"/>
+                <telerik:Label Width="140" Margin="3" Content="Vessel Name :" HorizontalAlignment="Left"  VerticalAlignment="Top"/>
+                <telerik:RadAutoCompleteBox DropDownWidth="500" x:Name="txtVessel" SearchTextChanged="txtVessel_SearchTextChanged"  DisplayMemberPath="Name" AutoCompleteMode="Suggest" TextSearchPath="Name" SelectionMode="Single" SearchText="{Binding Voyage.VesselName , Mode=TwoWay}"  Margin="3" HorizontalAlignment="Left"  VerticalAlignment="Top" Width="150"/>
+            </StackPanel>
+            <StackPanel Grid.Row="1" Orientation="Horizontal">
+                <telerik:Label Width="140" Margin="3" Content="Agent Voyage Number :" HorizontalAlignment="Left"  VerticalAlignment="Top"/>
+                <TextBox Text="{Binding Voyage.AgentVoyageNumber}" MaxLength="10" Margin="3" HorizontalAlignment="Left"  VerticalAlignment="Top" Width="150"/>
+                <telerik:Label Width="140" Margin="3" Content="PortCode Of Discharge :" HorizontalAlignment="Left"  VerticalAlignment="Top"/>
+                <telerik:RadAutoCompleteBox x:Name="txtOriginPort" DisplayMemberPath="Name" AutoCompleteMode="Suggest" TextSearchPath="FullCode" SelectionMode="Single" SearchText="{Binding Voyage.PortCodeOfDischarge , Mode=TwoWay}" SearchTextChanged="txtOrigiinPort_SearchTextChanged"  Margin="3" HorizontalAlignment="Left"  VerticalAlignment="Top" Width="150"/>
+                <telerik:Label Width="140" Margin="3" Content="Expected To ArriveDate :" HorizontalAlignment="Left"  VerticalAlignment="Top"/>
+                <telerik:RadDatePicker SelectedValue="{Binding Voyage.ExpectedToArriveDate}" Margin="3" HorizontalAlignment="Left"  VerticalAlignment="Top" Width="150"/>
+            </StackPanel>
+            <StackPanel Grid.Row="2" Orientation="Horizontal">
+                <!--<telerik:Label Width="140" Margin="3" Content="Rotation Number :" HorizontalAlignment="Left"  VerticalAlignment="Top"/>
+                <TextBox Text="{Binding Voyage.RotationNumber}" MaxLength="6" Margin="3" HorizontalAlignment="Left"  VerticalAlignment="Top" Width="150"/>
+                <telerik:Label Width="140" Margin="3" Content="Message Type :" HorizontalAlignment="Left"  VerticalAlignment="Top"/>
+                <TextBox Text="{Binding Voyage.MessageType}" MaxLength="3" Margin="3" HorizontalAlignment="Left"  VerticalAlignment="Top" Width="150"/>-->
+                <telerik:Label Width="140" Margin="3" Content="Number Of Instalment :" HorizontalAlignment="Left"  VerticalAlignment="Top"/>
+                <telerik:RadNumericUpDown Value="{Binding Voyage.NumberOfInstalment}" NumberDecimalDigits="0" Margin="3" HorizontalAlignment="Left"  VerticalAlignment="Top" Width="150"/>
+                <!--<telerik:Label Width="200" Margin="3" Content="Agent ManifestSequenceNumber :" HorizontalAlignment="Left"  VerticalAlignment="Top"/>
+                <telerik:RadNumericUpDown Value="{Binding Voyage.AgentManifestSequenceNumber}" NumberDecimalDigits="0" Margin="3" HorizontalAlignment="Left"  VerticalAlignment="Top" Width="150"/>-->
+            </StackPanel>
+
+
+
+        </Grid>
+        <telerik:RadGridView Margin="3" x:Name="bolGrid" ItemsSource="{Binding Voyage.BOLDetails}"
+                             SelectionMode="Single"
+                             AutoGenerateColumns="False" 
+                             RowDetailsVisibilityMode="VisibleWhenSelected"
+                              CanUserInsertRows="False"
+                             CanUserDeleteRows="False"
+                             CanUserGroupColumns="False"
+                            ShowGroupPanel="False"
+                             ShowGroupFooters="False"
+                             NewRowPosition="None"
+                            Grid.Row="1"
+                             RowDetailsTemplate="{StaticResource RowDetailsTemplate}">
+            <telerik:RadContextMenu.ContextMenu>
+                <telerik:RadContextMenu x:Name="GridContextMenu" 
+                                         ItemContainerStyle="{StaticResource MenuItemContainerStyle}"
+                                        Opened="GridContextMenu_Opened"
+                                        ItemClick="GridContextMenu_ItemClick"/>
+            </telerik:RadContextMenu.ContextMenu>
+            <telerik:RadGridView.Columns>
+                <telerik:GridViewDataColumn IsVisible="False" DataMemberBinding="{Binding BOLDetailsId}"/>
+                <telerik:GridViewDataColumn DataMemberBinding="{Binding BillOfLadingNumber}"/>
+                <telerik:GridViewDataColumn DataMemberBinding="{Binding BoxPartneringLineCode}"/>
+                <telerik:GridViewDataColumn DataMemberBinding="{Binding BoxPartneringAgentCode}"/>
+                <telerik:GridViewDataColumn DataMemberBinding="{Binding PortCodeOfOrigin}"/>
+                <telerik:GridViewDataColumn DataMemberBinding="{Binding PortCodeOfLoading}"/>
+                <telerik:GridViewDataColumn DataMemberBinding="{Binding PortCodeOfDischarge}"/>
+                <telerik:GridViewDataColumn DataMemberBinding="{Binding PortCodeOfDestination}"/>
+                <telerik:GridViewDataColumn DataMemberBinding="{Binding DateOfLoading}"/>
+                <!--<telerik:GridViewDataColumn DataMemberBinding="{Binding ManifestRegisterationNumber}"/>-->
+                <telerik:GridViewDataColumn DataMemberBinding="{Binding TradeCode}"/>
+                <telerik:GridViewDataColumn DataMemberBinding="{Binding TransShipmentMode}"/>
+                <telerik:GridViewDataColumn DataMemberBinding="{Binding BillOfLadingOwnerName}"/>
+                <telerik:GridViewDataColumn DataMemberBinding="{Binding BillOfLadingOwnerAddress}"/>
+                <telerik:GridViewDataColumn DataMemberBinding="{Binding CargoCode}"/>
+                <telerik:GridViewDataColumn DataMemberBinding="{Binding ConsolidatedCargoIndicator}"/>
+                <telerik:GridViewDataColumn DataMemberBinding="{Binding StorageRequestCode}"/>
+                <telerik:GridViewDataColumn DataMemberBinding="{Binding ContainerServiceType}"/>
+                <telerik:GridViewDataColumn DataMemberBinding="{Binding CountryOfOrigin}"/>
+                <!--<telerik:GridViewDataColumn DataMemberBinding="{Binding OriginalConsigneeName}"/>
+                <telerik:GridViewDataColumn DataMemberBinding="{Binding OriginalConsigneeAddress}"/>
+                <telerik:GridViewDataColumn DataMemberBinding="{Binding OriginalVesselName}"/>
+                <telerik:GridViewDataColumn DataMemberBinding="{Binding OriginalVoyageNumber}"/>
+                <telerik:GridViewDataColumn DataMemberBinding="{Binding OriginalBolNumber}"/>
+                <telerik:GridViewDataColumn DataMemberBinding="{Binding OriginalShipperName}"/>
+                <telerik:GridViewDataColumn DataMemberBinding="{Binding OriginalShipperAddress}"/>-->
+                <telerik:GridViewDataColumn DataMemberBinding="{Binding ShipperName}"/>
+                <telerik:GridViewDataColumn DataMemberBinding="{Binding ShipperAddress}"/>
+                <telerik:GridViewDataColumn DataMemberBinding="{Binding ShipperCountryCode}"/>
+                <telerik:GridViewDataColumn DataMemberBinding="{Binding ConsigneeCode}"/>
+                <telerik:GridViewDataColumn DataMemberBinding="{Binding ConsigneeName}"/>
+                <telerik:GridViewDataColumn DataMemberBinding="{Binding ConsigneeAddress}"/>
+                <telerik:GridViewDataColumn DataMemberBinding="{Binding Notify1Code}"/>
+                <telerik:GridViewDataColumn DataMemberBinding="{Binding Notify1Name}"/>
+                <telerik:GridViewDataColumn DataMemberBinding="{Binding Notify1Address}"/>
+                <telerik:GridViewDataColumn DataMemberBinding="{Binding Notify2Code}"/>
+                <telerik:GridViewDataColumn DataMemberBinding="{Binding Notify2Name}"/>
+                <telerik:GridViewDataColumn DataMemberBinding="{Binding Notify2Address}"/>
+                <telerik:GridViewDataColumn DataMemberBinding="{Binding Notify3Code}"/>
+                <telerik:GridViewDataColumn DataMemberBinding="{Binding Notify3Name}"/>
+                <telerik:GridViewDataColumn DataMemberBinding="{Binding Notify3Address}"/>
+                <telerik:GridViewDataColumn DataMemberBinding="{Binding MarksAndNumbers}"/>
+                <telerik:GridViewDataColumn DataMemberBinding="{Binding CommodityCode}"/>
+                <telerik:GridViewDataColumn DataMemberBinding="{Binding CommodityDescription}"/>
+                <telerik:GridViewDataColumn DataMemberBinding="{Binding Packages}"/>
+                <telerik:GridViewDataColumn DataMemberBinding="{Binding PackageType}"/>
+                <telerik:GridViewDataColumn DataMemberBinding="{Binding PackageTypeCode}"/>
+                <telerik:GridViewDataColumn DataMemberBinding="{Binding ContainerNumber}"/>
+                <telerik:GridViewDataColumn DataMemberBinding="{Binding CheckDigit}"/>
+                <telerik:GridViewDataColumn DataMemberBinding="{Binding NoOfContainers}"/>
+                <telerik:GridViewDataColumn DataMemberBinding="{Binding NoOfTeus}"/>
+                <telerik:GridViewDataColumn DataMemberBinding="{Binding TotalTareWeight}"/>
+                <telerik:GridViewDataColumn DataMemberBinding="{Binding CargoWeight}"/>
+                <telerik:GridViewDataColumn DataMemberBinding="{Binding GrossWeight}"/>
+                <telerik:GridViewDataColumn DataMemberBinding="{Binding CargoVolume}"/>
+                <telerik:GridViewDataColumn DataMemberBinding="{Binding TotalQuantity}"/>
+                <telerik:GridViewDataColumn DataMemberBinding="{Binding FreightTonne}"/>
+                <telerik:GridViewDataColumn DataMemberBinding="{Binding NoOfPallets}"/>
+                <telerik:GridViewDataColumn DataMemberBinding="{Binding SlacIndicator}"/>
+                <telerik:GridViewDataColumn DataMemberBinding="{Binding ContractCarriageCondition}"/>
+                <telerik:GridViewDataColumn DataMemberBinding="{Binding Remarks}"/>
+            </telerik:RadGridView.Columns>
+        </telerik:RadGridView>
+        <telerik:RadDataPager x:Name="radDataPager" Grid.Row="2"
+                          Source="{Binding Items, ElementName=bolGrid}" 
+                          PageSize="15" Margin="0" />
+        <StackPanel Orientation="Horizontal" Grid.Row="3">
+            <!--<telerik:RadButton Margin="8" Width="100" Click="RadButton_Click">Generate EDI</telerik:RadButton>-->
+            <telerik:RadButton Margin="8" Width="100" Click="RadButton_Click_1">Load EDI File</telerik:RadButton>
+            <telerik:RadButton x:Name="btnSave" Margin="8" Width="100" Click="btnSave_Click">Save Changes</telerik:RadButton>
+        </StackPanel>
+
+    </Grid>
+
+</Window>

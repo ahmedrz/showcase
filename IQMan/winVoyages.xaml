@@ -1,0 +1,61 @@
+﻿<Window x:Class="IQMan.winVoyages"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:IQMan"
+        xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"
+        Closing="Window_Closing"
+        mc:Ignorable="d"
+        Title="Voyages" Height="450" Width="800" WindowStartupLocation="CenterScreen" WindowState="Maximized">
+    <Grid>
+        <Grid.Resources>
+            <Style x:Key="MenuItemContainerStyle" TargetType="telerik:RadMenuItem">
+                <Setter Property="Header" Value="{Binding Text}"/>
+                <Setter Property="ItemsSource" Value="{Binding SubItems}"/>
+                <Setter Property="IsEnabled" Value="{Binding IsEnabled}"/>
+            </Style>
+        </Grid.Resources>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="45"/>
+        </Grid.RowDefinitions>
+        <telerik:RadGridView Margin="15,15,15,0" x:Name="voyagesGrid" 
+                             IsReadOnly="True"
+                             Grid.Row="1"
+                             CanUserInsertRows="False"
+                             AutoGenerateColumns="False"
+                             CanUserDeleteRows="False"
+                             ShowGroupPanel="False"
+                             ItemsSource="{Binding ElementName=EntityFrameworkDataSource,  Path=DataView}">
+            <telerik:RadGridView.Columns>
+                <telerik:GridViewDataColumn IsVisible="False" DataMemberBinding="{Binding VoyageDetailsId}"/>
+                <telerik:GridViewDataColumn Header="Vessel Name" DataMemberBinding="{Binding VesselName}"/>
+                <telerik:GridViewDataColumn Header="Voyage No" DataMemberBinding="{Binding AgentVoyageNumber}"/>
+                <telerik:GridViewDataColumn Header="Port Code" DataMemberBinding="{Binding PortCodeOfDischarge}"/>
+                <telerik:GridViewDataColumn Header="Expected Arrival" DataMemberBinding="{Binding ExpectedToArriveDate}"/>
+                <telerik:GridViewDataColumn Header="Instalment No" DataMemberBinding="{Binding NumberOfInstalment}"/>
+                <telerik:GridViewDataColumn Header="Manifest Type" DataMemberBinding="{Binding ManifestType}"/>
+            </telerik:RadGridView.Columns>
+            <telerik:RadContextMenu.ContextMenu>
+                <telerik:RadContextMenu x:Name="GridContextMenu" 
+                                         ItemContainerStyle="{StaticResource MenuItemContainerStyle}"
+                                        Opened="GridContextMenu_Opened"
+                                        ItemClick="GridContextMenu_ItemClick"/>
+            </telerik:RadContextMenu.ContextMenu>
+            <telerik:RadGridView.SortDescriptors>
+                <telerik:SortDescriptor Member="ExpectedToArriveDate" 
+                            SortDirection="Descending" />
+            </telerik:RadGridView.SortDescriptors>
+        </telerik:RadGridView>
+        <telerik:RadDataPager Margin="15,0,15,0" x:Name="radDataPager" Grid.Row="2"
+                              VerticalAlignment="Top"
+                          Source="{Binding Items, ElementName=voyagesGrid}" 
+                          PageSize="15" />
+        <telerik:RadEntityFrameworkDataSource Name="EntityFrameworkDataSource"  QueryName="VoyageDetails">
+        </telerik:RadEntityFrameworkDataSource>
+        <ProgressBar x:Name="prg" HorizontalAlignment="Stretch" Height="10" Margin="118,10,10,0" VerticalAlignment="Top"  Maximum="1" Visibility="Hidden"/>
+        <Label x:Name="lblprg" Content="Upload Progress :" HorizontalAlignment="Left" Margin="15,2,0,0" VerticalAlignment="Top" Visibility="Hidden"/>
+    </Grid>
+</Window>
